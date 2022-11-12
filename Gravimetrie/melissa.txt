@@ -1,0 +1,96 @@
+Test
+
+melissabartels@Melissas-Air ~ % pip install scikit-learn --use-deprecated=legacy-resolver
+
+Collecting scikit-learn
+  Using cached scikit-learn-1.1.2.tar.gz (7.0 MB)
+  Installing build dependencies ... done
+  Getting requirements to build wheel ... done
+  Preparing metadata (pyproject.toml) ... error
+  error: subprocess-exited-with-error
+  
+  × Preparing metadata (pyproject.toml) did not run successfully.
+  │ exit code: 1
+  ╰─> [72 lines of output]
+      Partial import of sklearn during the build process.
+      setup.py:128: DeprecationWarning:
+      
+        `numpy.distutils` is deprecated since NumPy 1.23.0, as a result
+        of the deprecation of `distutils` itself. It will be removed for
+        Python >= 3.12. For older Python versions it will remain present.
+        It is recommended to use `setuptools < 60.0` for those Python versions.
+        For more details, see:
+          https://numpy.org/devdocs/reference/distutils_status_migration.html
+      
+      
+        from numpy.distutils.command.build_ext import build_ext  # noqa
+      INFO: C compiler: clang -Wsign-compare -Wunreachable-code -fno-common -dynamic -DNDEBUG -g -fwrapv -O3 -Wall -arch arm64 -arch x86_64 -g
+      
+      INFO: compile options: '-c'
+      INFO: clang: test_program.c
+      xcrun: error: invalid active developer path (/Library/Developer/CommandLineTools), missing xcrun at: /Library/Developer/CommandLineTools/usr/bin/xcrun
+      Traceback (most recent call last):
+        File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/pip/_vendor/pep517/in_process/_in_process.py", line 351, in <module>
+          main()
+        File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/pip/_vendor/pep517/in_process/_in_process.py", line 333, in main
+          json_out['return_val'] = hook(**hook_input['kwargs'])
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/pip/_vendor/pep517/in_process/_in_process.py", line 152, in prepare_metadata_for_build_wheel
+          return hook(metadata_directory, config_settings)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        File "/private/var/folders/c9/dzct32_d12b8j1qlh2227t5w0000gn/T/pip-build-env-2fti6gkb/overlay/lib/python3.11/site-packages/setuptools/build_meta.py", line 174, in prepare_metadata_for_build_wheel
+          self.run_setup()
+        File "/private/var/folders/c9/dzct32_d12b8j1qlh2227t5w0000gn/T/pip-build-env-2fti6gkb/overlay/lib/python3.11/site-packages/setuptools/build_meta.py", line 268, in run_setup
+          self).run_setup(setup_script=setup_script)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        File "/private/var/folders/c9/dzct32_d12b8j1qlh2227t5w0000gn/T/pip-build-env-2fti6gkb/overlay/lib/python3.11/site-packages/setuptools/build_meta.py", line 158, in run_setup
+          exec(compile(code, __file__, 'exec'), locals())
+        File "setup.py", line 329, in <module>
+          setup_package()
+        File "setup.py", line 325, in setup_package
+          setup(**metadata)
+        File "/private/var/folders/c9/dzct32_d12b8j1qlh2227t5w0000gn/T/pip-build-env-2fti6gkb/overlay/lib/python3.11/site-packages/numpy/distutils/core.py", line 135, in setup
+          config = configuration()
+                   ^^^^^^^^^^^^^^^
+        File "setup.py", line 187, in configuration
+          config.add_subpackage("sklearn")
+        File "/private/var/folders/c9/dzct32_d12b8j1qlh2227t5w0000gn/T/pip-build-env-2fti6gkb/overlay/lib/python3.11/site-packages/numpy/distutils/misc_util.py", line 1050, in add_subpackage
+          config_list = self.get_subpackage(subpackage_name, subpackage_path,
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        File "/private/var/folders/c9/dzct32_d12b8j1qlh2227t5w0000gn/T/pip-build-env-2fti6gkb/overlay/lib/python3.11/site-packages/numpy/distutils/misc_util.py", line 1016, in get_subpackage
+          config = self._get_configuration_from_setup_py(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        File "/private/var/folders/c9/dzct32_d12b8j1qlh2227t5w0000gn/T/pip-build-env-2fti6gkb/overlay/lib/python3.11/site-packages/numpy/distutils/misc_util.py", line 958, in _get_configuration_from_setup_py
+          config = setup_module.configuration(*args)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        File "/private/var/folders/c9/dzct32_d12b8j1qlh2227t5w0000gn/T/pip-install-x3ojk4kd/scikit-learn/sklearn/setup.py", line 85, in configuration
+          cythonize_extensions(top_path, config)
+        File "/private/var/folders/c9/dzct32_d12b8j1qlh2227t5w0000gn/T/pip-install-x3ojk4kd/scikit-learn/sklearn/_build_utils/__init__.py", line 47, in cythonize_extensions
+          basic_check_build()
+        File "/private/var/folders/c9/dzct32_d12b8j1qlh2227t5w0000gn/T/pip-install-x3ojk4kd/scikit-learn/sklearn/_build_utils/pre_build_helpers.py", line 119, in basic_check_build
+          compile_test_program(code)
+        File "/private/var/folders/c9/dzct32_d12b8j1qlh2227t5w0000gn/T/pip-install-x3ojk4kd/scikit-learn/sklearn/_build_utils/pre_build_helpers.py", line 75, in compile_test_program
+          ccompiler.compile(
+        File "/private/var/folders/c9/dzct32_d12b8j1qlh2227t5w0000gn/T/pip-build-env-2fti6gkb/overlay/lib/python3.11/site-packages/numpy/distutils/ccompiler.py", line 89, in <lambda>
+          m = lambda self, *args, **kw: func(self, *args, **kw)
+                                        ^^^^^^^^^^^^^^^^^^^^^^^
+        File "/private/var/folders/c9/dzct32_d12b8j1qlh2227t5w0000gn/T/pip-build-env-2fti6gkb/overlay/lib/python3.11/site-packages/numpy/distutils/ccompiler.py", line 365, in CCompiler_compile
+          single_compile(o)
+        File "/private/var/folders/c9/dzct32_d12b8j1qlh2227t5w0000gn/T/pip-build-env-2fti6gkb/overlay/lib/python3.11/site-packages/numpy/distutils/ccompiler.py", line 325, in single_compile
+          self._compile(obj, src, ext, cc_args, extra_postargs, pp_opts)
+        File "/private/var/folders/c9/dzct32_d12b8j1qlh2227t5w0000gn/T/pip-build-env-2fti6gkb/overlay/lib/python3.11/site-packages/numpy/distutils/ccompiler.py", line 89, in <lambda>
+          m = lambda self, *args, **kw: func(self, *args, **kw)
+                                        ^^^^^^^^^^^^^^^^^^^^^^^
+        File "/private/var/folders/c9/dzct32_d12b8j1qlh2227t5w0000gn/T/pip-build-env-2fti6gkb/overlay/lib/python3.11/site-packages/numpy/distutils/unixccompiler.py", line 58, in UnixCCompiler__compile
+          raise CompileError(msg) from None
+      distutils.errors.CompileError: Command "clang -Wsign-compare -Wunreachable-code -fno-common -dynamic -DNDEBUG -g -fwrapv -O3 -Wall -arch arm64 -arch x86_64 -g -c test_program.c -o objects/test_program.o" failed with exit status 1
+      [end of output]
+  
+  note: This error originates from a subprocess, and is likely not a problem with pip.
+error: metadata-generation-failed
+
+× Encountered error while generating package metadata.
+╰─> scikit-learn
+
+note: This is an issue with the package mentioned above, not pip.
+hint: See above for details.
