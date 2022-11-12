@@ -1,14 +1,18 @@
-import matplotlib.pyplot as plot
-from datetime import datetime
-import math
+import os
 import csv
 
 
 def readRawData(fileName) -> list:
-	reader = csv.reader(open(fileName, 'r'), delimiter='\t')
+	directory = os.path.dirname(os.path.realpath('__file__'))
+	absFileName = os.path.join(directory, fileName)
+	reader = csv.reader(open(absFileName, 'r'), delimiter='\t')
 	channels = []
 	for s in reader:
-		channels.append(float(s[0]))
+		row = s[0]
+		if (row == "I [a.u.]"):
+			continue
+		else:
+			channels.append(float(row))
 	return channels
 
 def readRawKalData(fileName) -> list:
