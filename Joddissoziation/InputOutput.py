@@ -4,7 +4,7 @@ import csv
 
 def readRawData(fileName) -> list:
 	directory = os.path.dirname(os.path.realpath('__file__'))
-	absFileName = os.path.join(directory, fileName)
+	absFileName = directory + "/" + fileName
 	reader = csv.reader(open(absFileName, 'r'), delimiter='\t')
 	channels = []
 	for s in reader:
