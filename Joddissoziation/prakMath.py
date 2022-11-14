@@ -1,6 +1,17 @@
 import math
+import numpy
 
-def linearRegression(xValues: list, yValues: list):
+def linearRegression(xValues: list, yValues: list, descr: str = ""):
+	"""Linear Regression for a list of x and value values
+
+	Args:
+		xValues (list<float>): the x values used for the regression
+		yValues (list<float>): the y values used for the regression
+		descr (str): a description of what is being fitting, if provided a message is printed with the description and the fit parameters
+
+	Returns:
+		(slope, intercept, slopeErr, interceptErr): the regression parameters with their standard deviation (list of floats)
+	"""
 	count = len(xValues)
 	
 	# calculate x̄
@@ -56,4 +67,52 @@ def linearRegression(xValues: list, yValues: list):
 	radicand /= count
 	
 	interceptErr = slopeErr * math.sqrt(radicand)
+	
+	# optionally print values
+	if (descr != ""):
+		msg = "LinReg for %s: [" % descr
+		
+		slopePrecision = math.floor(math.log10(slopeErr))
+		if (slopeErr * (10 ** (-slopePrecision)) < 2.5):
+			slopePrecision -= 1
+		
+		slopeR = round(slope, -slopePrecision)
+		slopeErrR = round(slopeErr, -slopePrecision)
+		
+		if (slopePrecision > -6 and slopePrecision < 7):
+			msg += "slope = %s ± %s" % (floatString(slopeR, -slopePrecision), floatString(slopeErrR, -slopePrecision))
+		# else:
+			# msg += "slope = %s ± %s" % (floatString(slopeR, -slopePrecision), floatString(slopeErrR, -slopePrecision))
+		
+		interceptPrecision = math.floor(math.log10(interceptErr))
+		if (interceptErr * (10 ** (-interceptPrecision)) < 2.5):
+			interceptPrecision -= 1
+		
+		interceptR = round(intercept, -interceptPrecision)
+		interceptErrR = round(interceptErr, -interceptPrecision)
+		
+		if (interceptPrecision > -6 and interceptPrecision < 7):
+			msg += ", intercept = %s ± %s]" % (floatString(interceptR, -interceptPrecision), floatString(interceptErrR, -interceptPrecision))
+		# else:
+			# msg += ", intercept = %s ± %s]" % (floatString(interceptR, -interceptPrecision), floatString(interceptErrR, -interceptPrecision))
+		
+		print(msg)
+	
 	return (slope, intercept, slopeErr, interceptErr)
+
+# calculate a list of x and y values for a linear function
+def linearValues(start, stop, slope, intercept, many=True):
+	diff = stop - start
+	x = []
+	if (many):
+		x = numpy.linspace(start, stop, num=50)
+	else:
+		x = [start, start + 0.003*diff, stop - 0.003 * diff, stop]
+	y = []
+	for value in x:
+		y.append(value * slope + intercept)
+	
+	return (x, y)
+
+def floatString(FloatNumber, Precision):
+    return "%0.*f" % (Precision, FloatNumber)
