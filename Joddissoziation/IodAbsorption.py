@@ -20,23 +20,29 @@ intensity22VN = []
 intensity35VN = []
 intensityAvgN = []
 
-for i35, i22, i10, i0 in zip(intensity35V, intensity22V, intensity10V, intensity0V):
-    intensity35VN.append(i35 / i0)
-    intensity22VN.append(i22 / i0)
-    intensity10VN.append(i10 / i0)
-    print(str(i35 / i0))
+# for i35, i22, i10, i0 in zip(intensity35V, intensity22V, intensity10V, intensity0V):
+#     intensity35VN.append(i35 / i0)
+#     intensity22VN.append(i22 / i0)
+#     intensity10VN.append(i10 / i0)
+#     print(str(i35 / i0))
 
 for i in range(0, 1024):
     avg = 0
     n = 0
     for j in range(max(i-8, 0), min(1023, i+9)):
-        m = math.e**(-((i-j)*0.3)**2)
+        m = math.e**(-((i-j)*0.4)**2)
         avg += intensity0V[j] * m
         n += m
     avg /= n
     
     v = (intensity10V[i] + intensity22V[i] + intensity35V[i]) / 3
-    intensityAvgN.append(v / (0.1 * intensity0V[i] + 0.9 * avg))
+    v10 = intensity10V[i]
+    v22 = intensity22V[i]
+    v35 = intensity35V[i]
+    intensity10VN.append(v10 / (0.15 * intensity0V[i] + 0.85 * avg))
+    intensity22VN.append(v22 / (0.15 * intensity0V[i] + 0.85 * avg))
+    intensity35VN.append(v35 / (0.15 * intensity0V[i] + 0.85 * avg))
+    intensityAvgN.append(v / (0.15 * intensity0V[i] + 0.85 * avg))
     # intensityAvgN.append(avg)
 
 # plot.figure(figsize=(8, 5.5), dpi=100)
@@ -49,7 +55,7 @@ for i in range(0, 1024):
 # plot.ylabel("Intensität [a.u.]")
 # plot.axis([320, 620, 0, 260])
 # plot.minorticks_on()
-# plot.savefig("Abbildungen\Jod_Übersicht", transparent = True)
+# plot.savefig("Abbildungen\Jod_Übersicht", transparent = True, dpi=300))
 # plot.show()
 
 for i in range (360, 700) :
@@ -75,26 +81,25 @@ for i in range (400, 700) :
 # # plot.grid()
 # plot.grid(b=True, which='major', color='r')
 # plot.grid(b=True, which='minor', color='b')
-# # plot.savefig("Abbildungen\Jod_Übersicht_CloseUp", transparent = True)
+# # plot.savefig("Abbildungen\Jod_Übersicht_CloseUp", transparent = True, dpi=300))
 # plot.show()
 
-for i in range(1024):
-    intensity10V[i] *= 0.00 + 0.034 * (i/ 1024)
+# for i in range(1024):
+#     intensity10V[i] *= 0.00 + 0.034 * (i/ 1024)
     # intensityAvgN[i] *= -0.07 + 0.17 * i/ 1024
 
 plot.figure(figsize=(8, 5.5), dpi=100)
-plot.plot(channels, intensity10VN, label='U = 10V', color="violet")
-plot.plot(channels, intensity22VN, label='U = 22V', color="orangered")
-plot.plot(channels, intensity35VN, label='U = 35V', color="gold")
-plot.plot(channels, intensity10V, label='U = 35V', color="black")
-plot.plot(channels, intensityAvgN, label='Avg', color="green")
+plot.plot(wavelengths1024, intensity10VN, label='U = 10V', color="violet", zorder=5)
+plot.plot(wavelengths1024, intensity22VN, label='U = 22V', color="orangered", zorder=5)
+plot.plot(wavelengths1024, intensity35VN, label='U = 35V', color="gold", zorder=5)
+plot.plot(wavelengths1024, intensityAvgN, label='Mittelwert', color="lightgrey")
 plot.legend(loc="upper right")
 plot.xlabel("Wellenlänge [nm]")
-plot.ylabel("Intensität [a.u.]")
-plot.axis([320, 730, 0.2, 2])
+plot.ylabel(r"${I_\mathrm{V>0}} \quad / \quad {I_\mathrm{V=0}}$")
+plot.axis([400, 530, 0.9, 1.9])
 plot.minorticks_on()
 # plot.grid()
-plot.grid(visible=True, which='major', color='r')
-plot.grid(visible=True, which='minor', color='b')
-# plot.savefig("Abbildungen\Jod_Übersicht_Norm", transparent = True)
+# plot.grid(visible=True, which='major', color='r')
+# plot.grid(visible=True, which='minor', color='b')
+# plot.savefig("Abbildungen\Jod_Übersicht_Norm", transparent = True , dpi=300)
 plot.show()

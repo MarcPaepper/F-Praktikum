@@ -72,27 +72,29 @@ def linearRegression(xValues: list, yValues: list, descr: str = ""):
 	if (descr != ""):
 		msg = "LinReg for %s: [" % descr
 		
-		slopePrecision = math.floor(math.log10(slopeErr))
-		if (slopeErr * (10 ** (-slopePrecision)) < 2.5):
-			slopePrecision -= 1
+		slopePrecision = -math.floor(math.log10(slopeErr))
+		if (slopeErr * (10 ** slopePrecision) < 2.5):
+			slopePrecision += 1
 		
-		slopeR = round(slope, -slopePrecision)
-		slopeErrR = round(slopeErr, -slopePrecision)
+		if (slopePrecision > -7 and slopePrecision < 7):
+			slopeR = round(slope, slopePrecision)
+			slopeErrR = round(slopeErr, slopePrecision)
+			msg += "slope = %s ± %s" % (floatString(slopeR, slopePrecision), floatString(slopeErrR, slopePrecision))
+		else:
+			decimalPlaces = min(-math.floor(math.log10(slope)), slopePrecision)
+			slopeV = floatString(slope * (10 ** decimalPlaces), (slopePrecision - decimalPlaces))
+			slopeErrV = floatString(slopeErr * (10 ** decimalPlaces), (slopePrecision - decimalPlaces))
+			msg += "slope = %s ⋅ 10^%s ± %s ⋅ 10^%s" % (slopeV, slopePrecision, slopeErrV, slopePrecision)
 		
-		if (slopePrecision > -6 and slopePrecision < 7):
-			msg += "slope = %s ± %s" % (floatString(slopeR, -slopePrecision), floatString(slopeErrR, -slopePrecision))
-		# else:
-			# msg += "slope = %s ± %s" % (floatString(slopeR, -slopePrecision), floatString(slopeErrR, -slopePrecision))
+		interceptPrecision = -math.floor(math.log10(interceptErr))
+		if (interceptErr * (10 ** interceptPrecision) < 2.5):
+			interceptPrecision += 1
 		
-		interceptPrecision = math.floor(math.log10(interceptErr))
-		if (interceptErr * (10 ** (-interceptPrecision)) < 2.5):
-			interceptPrecision -= 1
+		interceptR = round(intercept, interceptPrecision)
+		interceptErrR = round(interceptErr, interceptPrecision)
 		
-		interceptR = round(intercept, -interceptPrecision)
-		interceptErrR = round(interceptErr, -interceptPrecision)
-		
-		if (interceptPrecision > -6 and interceptPrecision < 7):
-			msg += ", intercept = %s ± %s]" % (floatString(interceptR, -interceptPrecision), floatString(interceptErrR, -interceptPrecision))
+		if (interceptPrecision > -7 and interceptPrecision < 7):
+			msg += ", intercept = %s ± %s]" % (floatString(interceptR, interceptPrecision), floatString(interceptErrR, interceptPrecision))
 		# else:
 			# msg += ", intercept = %s ± %s]" % (floatString(interceptR, -interceptPrecision), floatString(interceptErrR, -interceptPrecision))
 		
