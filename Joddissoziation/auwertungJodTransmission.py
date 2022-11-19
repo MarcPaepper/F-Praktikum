@@ -19,6 +19,8 @@ for n in channelNumbers:
 # channelsBlau1Zu100 = readRawData("Messdaten/Transmission_blaue_Tinte_1_zu_100.txt")
 # channelsBlau1Zu200 = readRawData("Messdaten/TransmissionBlaueTinte1zu200.txt")
 # channelsBlau1Zu200 = readRawData("Messdaten/TransmissionBlaueTinte1zu200.txt")
+channelsBlauUnbekannt = readRawData("Messdaten/Transmission_blaue_tinte_unbekannt.txt")
+channelsBlauUnbekanntTrans = []
 # channelsSchwarz1Zu900Trans = []
 # channelsSchwarz2Zu900Trans = []
 # channelsSchwarzUnbekanntTrans = []
@@ -30,6 +32,14 @@ for n in channelNumbers:
 #     channelsSchwarz2Zu900Trans.append(chSchw2zu900 / chWasser)
 # for chWasser, chSchwUnbekannt in zip(channelsWasser, channelsSchwarzUnbekannt):
 #     channelsSchwarzUnbekanntTrans.append(chSchwUnbekannt / chWasser)
+for chWasser, chBluUnbekannt in zip(channelsWasser, channelsBlauUnbekannt):
+    channelsBlauUnbekanntTrans.append(chBluUnbekannt / chWasser)
+plot.plot(wavelengths1024, channelsBlauUnbekanntTrans, label='Blaue unbekannte Tinte', color = "blue")
+plot.legend(loc="upper left")
+plot.xlabel("Wellenlänge in nm")
+plot.ylabel("Transmission T")
+# plot.savefig("transparenteKalibrierung", transparent = True)
+plot.show()
 #Pflanzenölauswertung
 # channelsOlive = readRawData("Messdaten/TransmissionOlivenoelPur.txt")
 # channelsSonne = readRawData("Messdaten/TransmissionSonnenblumenölPur.txt")
@@ -99,26 +109,26 @@ for n in channelNumbers:
 # # # plot.savefig("transparenteKalibrierung", transparent = True)
 # plot.show()
 
-channelsKleinUndGrün = readRawData("Messdaten/TransmissionKleineGrüneBlätter.txt")
-channelsGrossUndGelb = readRawData("Messdaten/TransmissionGrossesGelbesBlatt.txt")
-channelsGrossUndGrün = readRawData("Messdaten/TransmissionGrossesGrünesBlatt.txt")
+# channelsKleinUndGrün = readRawData("Messdaten/TransmissionKleineGrüneBlätter.txt")
+# channelsGrossUndGelb = readRawData("Messdaten/TransmissionGrossesGelbesBlatt.txt")
+# channelsGrossUndGrün = readRawData("Messdaten/TransmissionGrossesGrünesBlatt.txt")
 
-channelsKleinUndGrünTrans = []
-channelsGrossUndGelbTrans = []
-channelsGrossUndGrünTrans = []
+# channelsKleinUndGrünTrans = []
+# channelsGrossUndGelbTrans = []
+# channelsGrossUndGrünTrans = []
 
-for chEthan, chSchmün in zip(channelsEthanol, channelsKleinUndGrün):
-    channelsKleinUndGrünTrans.append(chSchmün / chEthan)
-for chEthan, chGress in zip(channelsEthanol, channelsGrossUndGelb):
-    channelsGrossUndGelbTrans.append(chGress / chEthan)
-for chEthan, chGrüss in zip(channelsEthanol, channelsGrossUndGrün):
-    channelsGrossUndGrünTrans.append(chGrüss / chEthan)
+# for chEthan, chSchmün in zip(channelsEthanol, channelsKleinUndGrün):
+#     channelsKleinUndGrünTrans.append(chSchmün / chEthan)
+# for chEthan, chGress in zip(channelsEthanol, channelsGrossUndGelb):
+#     channelsGrossUndGelbTrans.append(chGress / chEthan)
+# for chEthan, chGrüss in zip(channelsEthanol, channelsGrossUndGrün):
+#     channelsGrossUndGrünTrans.append(chGrüss / chEthan)
 
-plot.plot(wavelengths1024, channelsKleinUndGrünTrans, label='Kleines grünes Blatt', color = "darkgreen")
-plot.plot(wavelengths1024, channelsGrossUndGelbTrans, label='Großes gelbes Blatt', color = "goldenrod")
-plot.plot(wavelengths1024, channelsGrossUndGrünTrans, label='Großes grünes Blatt', color = "forestgreen")
-plot.legend(loc="upper left")
-plot.xlabel("Wellenlänge in nm")
-plot.ylabel("Transmission T")
+# plot.plot(wavelengths1024, channelsKleinUndGrünTrans, label='Kleines grünes Blatt', color = "darkgreen")
+# plot.plot(wavelengths1024, channelsGrossUndGelbTrans, label='Großes gelbes Blatt', color = "goldenrod")
+# plot.plot(wavelengths1024, channelsGrossUndGrünTrans, label='Großes grünes Blatt', color = "forestgreen")
+# plot.legend(loc="upper left")
+# plot.xlabel("Wellenlänge in nm")
+# plot.ylabel("Transmission T")
 # plot.savefig("transparenteKalibrierung", transparent = True)
-plot.show()
+# plot.show()
