@@ -35,7 +35,7 @@ plot.show()
 
 # plot values and regression (close up) h4
 
-plot.figure(figsize=(8, 5.5), dpi=100)
+plot.figure(figsize=(8, 5.5), dpi=300)
 plot.plot(regXH4, regYH4, color="green", label="Linearer Fit")
 plot.errorbar(numbersH4, energiesH4, yerr=energyErrH4, fmt='o', label="Messdaten")
 plot.axis([0, 40, 0.0, 0.025])
