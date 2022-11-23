@@ -11,7 +11,7 @@ from gravMath import linearRegression, gravitationAnomalyOfPolygon
 
 # --- Versuchsteil 3 ---
 
-def auswertung(slopeDrift):
+def auswertung(slopeDrift, slopeIntercept):
 	# color map for heat map
 	# norm = matplotlib.colors.Normalize(0,20)
 	# colors = [[0.0, (255/255, 252/255, 205/255)],
@@ -22,17 +22,15 @@ def auswertung(slopeDrift):
 	# 		[0.135, (127/255, 36/255, 129/255)],
 	# 		[0.367, (42/255, 17/255, 92/255)],
 	# 		[1.0, (0, 0, 0)]]
-	colors = [[0.0, (255/255, 252/255, 205/255)],
-			[0.048, (255/255, 180/255, 119/255)],
-			[0.12, (255/255, 56/255, 92/255)],
-			[0.23, (182/255, 54/255, 121/255)],
-			[0.63, (127/255, 36/255, 129/255)],
-			[0.8, (42/255, 17/255, 92/255)],
-			[1.0, (0, 0, 0)]]
-	
-	#
+	# colors = [[0.0, (255/255, 252/255, 205/255)],
+	# 		[0.048, (255/255, 180/255, 119/255)],
+	# 		[0.12, (255/255, 56/255, 92/255)],
+	# 		[0.23, (182/255, 54/255, 121/255)],
+	# 		[0.63, (127/255, 36/255, 129/255)],
+	# 		[0.8, (42/255, 17/255, 92/255)],
+	# 		[1.0, (0, 0, 0)]]
 
-	cmap = matplotlib.colors.LinearSegmentedColormap.from_list("", colors)
+	# cmap = matplotlib.colors.LinearSegmentedColormap.from_list("", colors)
 	cmap = sns.color_palette("rocket_r", as_cmap=True)
 	
 	# read in data
@@ -58,8 +56,8 @@ def auswertung(slopeDrift):
 	# drift correction
 	for d in datapoints:
 		timediff = (d.time - datapoints[0].time).total_seconds() / 60.0
-		driftcorr = timediff * slopeDrift
-		d.gravitation += driftcorr
+		driftcorr = slopeIntercept + timediff * slopeDrift
+		d.gravitation -= driftcorr
 		gravAfterDriftCorr.append(d.gravitation)
 
 	# height correction (Freiluftkorrektur)

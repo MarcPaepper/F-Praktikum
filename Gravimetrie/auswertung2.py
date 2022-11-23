@@ -11,9 +11,9 @@ from gravMath import linearRegression, gravitationAnomalyOfPolygon
 
 # --- Versuchsteil 2 ---
 
-def auswertung(slopeDrift):
+def auswertung(slopeDrift, slopeIntercept):
     # read in data
-    datapoints = inputOutput.readRawData("Rohdaten_2.csv")
+    datapoints = inputOutput.readRawData("Rohdaten_2.csv", useRelativeHeight=False)
 
     # tidal correction
     gravBeforeTidalCorr = []
@@ -27,8 +27,8 @@ def auswertung(slopeDrift):
     # drift correction
     for d in datapoints:
         timediff = (d.time - datapoints[0].time).total_seconds() / 60.0
-        driftcorr = timediff * slopeDrift
-        d.gravitation += driftcorr
+        driftcorr = slopeIntercept + timediff * slopeDrift
+        d.gravitation -= driftcorr
 
     # height correction (Freiluftkorrektur)
     for d in datapoints:
