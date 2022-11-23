@@ -17,13 +17,14 @@ class datapoint:
 		return("Datapoint: [gravitation: %s, time: %s, coordinates: %s, height: %s, distance: %s]"
 			% (self.gravitation, self.time, self.utm, self.height, self.distance))
 
-def readRawData(fileName) -> list[datapoint]:
+def readRawData(fileName, useRelativeHeight = True) -> list[datapoint]:
 	reader = csv.reader(open(fileName, 'r'), delimiter='\t')
 	datapoints = []
 	# the gps coordinates for the Physikzentrum (used for the drift reference measurements where no gps coordinates were measured)
 	utm = geo2utm.geo2utm(52.28014, 10.5478)
 	counter = 0
 	totalDist = 0
+	prevHeight = 0
 	for row in reader:
 		counter += 1
 		if (len(row) == 3):
@@ -32,8 +33,11 @@ def readRawData(fileName) -> list[datapoint]:
 			timestamp = datetime.strptime(timestring.replace('\'', ''), '%Y-%m-%d %H:%M:%S')
 			# convert counts to mGal
 			gravitation_uncorrected = count2mgal_cologne.count2mgal([float(counts)])[0]
+			# use absolute height difference or relative difference to previous point
+			if (useRelativeHeight):
+				height = float(height) + prevHeight
 			# add new datapoint to list
-			datapoints.append(datapoint(gravitation_uncorrected, timestamp, height, utm=utm))
+			d = datapoint(gravitation_uncorrected, timestamp, height, utm=utm)
 		
 		if (len(row) == 4):
 			timestring, counts, height, dist = row
@@ -43,8 +47,11 @@ def readRawData(fileName) -> list[datapoint]:
 			gravitation_uncorrected = count2mgal_cologne.count2mgal([float(counts)])[0]
 			# sum up distances
 			totalDist += float(dist)
+			# use absolute height difference or relative difference to previous point
+			if (useRelativeHeight):
+				height = float(height) + prevHeight
 			# add new datapoint to list
-			datapoints.append(datapoint(gravitation_uncorrected, timestamp, height, utm=utm, distance=totalDist))
+			d = datapoint(gravitation_uncorrected, timestamp, height, utm=utm, distance=totalDist)
 		
 		if (len(row) == 5):
 			timestring, counts, height, gpsN, gpsE = row
@@ -54,8 +61,11 @@ def readRawData(fileName) -> list[datapoint]:
 			gravitation_uncorrected = count2mgal_cologne.count2mgal([float(counts)])[0]
 			# convert to utm object
 			utm = geo2utm.geo2utm(float(gpsN), float(gpsE))
+			# use absolute height difference or relative difference to previous point
+			if (useRelativeHeight):
+				height = float(height) + prevHeight
 			# add new datapoint to list
-			datapoints.append(datapoint(gravitation_uncorrected, timestamp, height, utm=utm))
+			d = datapoint(gravitation_uncorrected, timestamp, height, utm=utm)
 		
 		if (len(row) == 6):
 			timestring, counts, height, dist, gpsN, gpsE = row
@@ -67,8 +77,27 @@ def readRawData(fileName) -> list[datapoint]:
 			utm = geo2utm.geo2utm(float(gpsN), float(gpsE))
 			# sum up distances
 			totalDist += float(dist)
+			# use absolute height difference or relative difference to previous point
+			if (useRelativeHeight):
+				height = float(height) + prevHeight
 			# add new datapoint to list
-			datapoints.append(datapoint(gravitation_uncorrected, timestamp, height, distance=totalDist, utm=utm))
+			d = datapoint(gravitation_uncorrected, timestamp, height, distance=totalDist, utm=utm)
+		
+		prevHeight = height
+		
+		datapoints.append(d)
 	return datapoints
 
-#def readGitLabData()
+# read csv files provided from the other groups
+def readCSV(fileName) -> list[datapoint]:
+	reader = csv.reader(open(fileName, 'r'), delimiter='\t')
+	datapoints = []
+	for row in reader:
+		timestring, utmE, utmN, height, gravitation = row
+		# convert utm
+		utm = [float(utmE), float(utmN), 32, "N"]
+		# convert time string to datetime object
+		timestamp = datetime.strptime(timestring.replace('\'', ''), '%Y-%m-%d')
+		# add new datapoint to list
+		datapoints.append(datapoint(float(gravitation), timestamp, float(height), utm=utm))
+	return datapoints

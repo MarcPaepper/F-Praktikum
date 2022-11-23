@@ -11,7 +11,7 @@ from gravMath import linearRegression, gravitationAnomalyOfPolygon
 
 # --- Versuchsteil 1 ---
 
-def auswertung(slopeDrift):
+def auswertung(slopeDrift, slopeIntercept):
     # read in data
     datapoints = inputOutput.readRawData("Rohdaten_1.csv")
 
@@ -32,8 +32,8 @@ def auswertung(slopeDrift):
     # drift correction
     for d in datapoints:
         timediff = (d.time - datapoints[0].time).total_seconds() / 60.0
-        driftcorr = timediff * slopeDrift
-        d.gravitation += driftcorr
+        driftcorr = slopeIntercept + timediff * slopeDrift
+        d.gravitation -= driftcorr
 
     # make two lists for the heights (x values) and gravitational acceleration (y values)
     heights = []

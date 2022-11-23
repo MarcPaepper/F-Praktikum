@@ -46,7 +46,7 @@ def linearRegression(xValues: list, yValues: list):
 	
 	# denominator stays the same
 	
-	slopeErr = math.sqrt((1/(count-2)) * numerator / denominator)
+	slopeErr = math.sqrt((1/(count-2)) * numerator / denominator) if count > 2 else 0
 	
 	# calculate standard error for intercept (under normality assumption)
 	# m = intercept error * sqrt(Σ x_i^2 / n)
