@@ -1,0 +1,95 @@
+data_global
+_chemical_name_mineral 'Alum-(K)'
+loop_
+_publ_author_name
+'Nyburg S C'
+'Steed J'
+'Aleksovska S'
+'Petrusevski V M'
+_journal_name_full 'Acta Crystallographica, Section B'
+_journal_volume 56 
+_journal_year 2000
+_journal_page_first 204
+_journal_page_last 209
+_publ_section_title
+;
+ Structure of the alums. I. On the sulfate group disorder in the alpha-alums
+ Sample: T = 296 K
+;
+_database_code_amcsd 0009911
+_chemical_compound_source 'Synthetic'
+_chemical_formula_sum 'K Al S2 O20 H24'
+_chemical_formula_sum ''
+_cell_length_a 12.1640
+_cell_length_b 12.1640
+_cell_length_c 12.1640
+_cell_angle_alpha 90
+_cell_angle_beta 90
+_cell_angle_gamma 90
+_cell_volume 1799.821
+_exptl_crystal_density_diffrn      1.751
+_symmetry_space_group_name_H-M 'P a 3'
+loop_
+_space_group_symop_operation_xyz
+  'x,y,z'
+  '1/2+z,x,1/2-y'
+  'z,1/2-x,1/2+y'
+  '1/2-z,1/2+x,y'
+  '-z,-x,-y'
+  '1/2+y,1/2-z,-x'
+  '1/2-y,-z,1/2+x'
+  '-y,1/2+z,1/2-x'
+  'y,z,x'
+  'x,1/2-y,1/2+z'
+  '1/2-x,1/2+y,z'
+  '1/2+x,y,1/2-z'
+  '-x,-y,-z'
+  '1/2-z,-x,1/2+y'
+  '-z,1/2+x,1/2-y'
+  '1/2+z,1/2-x,-y'
+  'z,x,y'
+  '1/2-y,1/2+z,x'
+  '1/2+y,z,1/2-x'
+  'y,1/2-z,1/2+x'
+  '-y,-z,-x'
+  '-x,1/2+y,1/2-z'
+  '1/2+x,1/2-y,-z'
+  '1/2-x,-y,1/2+z'
+loop_
+_atom_site_label
+_atom_site_fract_x
+_atom_site_fract_y
+_atom_site_fract_z
+_atom_site_occupancy
+_atom_site_U_iso_or_equiv
+K   0.50000   0.50000   0.50000   1.00000   0.04920
+Al   0.00000   0.00000   0.00000   1.00000   0.02080
+S   0.30764   0.30764   0.30764   1.00000   0.02650
+O3   0.23898   0.23898   0.23898   0.69700   0.06330
+O3A   0.37490   0.37490   0.37490   0.30300   0.08200
+O4   0.26480   0.42078   0.30973   0.69700   0.04790
+O4A   0.28530   0.20420   0.36430   0.30300   0.05010
+O1   0.15176   0.01980  -0.01855   1.00000   0.03080
+O2   0.04633   0.13357   0.30258   1.00000   0.04170
+H11   0.17520   0.03500  -0.06830   1.00000   0.04400
+H12   0.19800   0.02500   0.03800   1.00000   0.06100
+H21   0.10400   0.16000   0.29900   1.00000   0.07700
+H22   0.00800   0.18400   0.29000   1.00000   0.06000
+loop_
+_atom_site_aniso_label
+_atom_site_aniso_U_11
+_atom_site_aniso_U_22
+_atom_site_aniso_U_33
+_atom_site_aniso_U_12
+_atom_site_aniso_U_13
+_atom_site_aniso_U_23
+K 0.04920 0.04920 0.04920 0.01040 0.01040 0.01040
+Al 0.02080 0.02080 0.02080 -0.00040 -0.00040 -0.00040
+S 0.02650 0.02650 0.02650 0.00370 0.00340 0.00370
+O3 0.06330 0.06330 0.06330 -0.01210 -0.01210 -0.01210
+O3A 0.08200 0.08200 0.08200 -0.02800 -0.02800 -0.02800
+O4 0.06200 0.03780 0.04400 0.02130 0.02120 0.01150
+O4A 0.04800 0.03700 0.06600 0.01200 0.02300 0.02700
+O1 0.02370 0.03850 0.03030 -0.00460 0.00130 0.00130
+O2 0.04430 0.03960 0.04130 0.00080 -0.00500 -0.00520
+

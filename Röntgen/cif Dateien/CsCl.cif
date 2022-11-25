@@ -1,0 +1,85 @@
+data_global
+_amcsd_formula_title 'CsCl'
+loop_
+_publ_author_name
+'Wyckoff R W G'
+_journal_name_full 'Crystal Structures'
+_journal_volume 1 
+_journal_year 1963
+_journal_page_first 85
+_journal_page_last 237
+_publ_section_title
+;
+ Second edition. Interscience Publishers, New York, New York
+ Note: CsCl structure, cesium chloride structure
+;
+_database_code_amcsd 0011467
+_chemical_formula_sum 'Cs Cl'
+_chemical_formula_sum ''
+_cell_length_a 4.123
+_cell_length_b 4.123
+_cell_length_c 4.123
+_cell_angle_alpha 90
+_cell_angle_beta 90
+_cell_angle_gamma 90
+_cell_volume 70.087
+_exptl_crystal_density_diffrn      3.989
+_symmetry_space_group_name_H-M 'P m 3 m'
+loop_
+_space_group_symop_operation_xyz
+  'x,y,z'
+  'z,-x,y'
+  '-y,z,-x'
+  'x,-y,z'
+  '-z,x,-y'
+  'y,-z,x'
+  '-x,y,-z'
+  'x,-z,-y'
+  '-z,y,x'
+  'y,-x,-z'
+  '-x,z,y'
+  'z,-y,-x'
+  '-y,x,z'
+  'x,z,y'
+  '-z,-y,-x'
+  'y,x,z'
+  '-x,-z,-y'
+  'z,y,x'
+  '-y,-x,-z'
+  'z,x,-y'
+  '-y,-z,x'
+  'x,y,-z'
+  '-z,-x,y'
+  'y,z,-x'
+  '-x,-y,z'
+  '-z,x,y'
+  'y,-z,-x'
+  '-x,y,z'
+  'z,-x,-y'
+  '-y,z,x'
+  'x,-y,-z'
+  '-x,z,-y'
+  'z,-y,x'
+  '-y,x,-z'
+  'x,-z,y'
+  '-z,y,-x'
+  'y,-x,z'
+  '-x,-z,y'
+  'z,y,-x'
+  '-y,-x,z'
+  'x,z,-y'
+  '-z,-y,x'
+  'y,x,-z'
+  '-z,-x,-y'
+  'y,z,x'
+  '-x,-y,-z'
+  'z,x,y'
+  '-y,-z,-x'
+loop_
+_atom_site_label
+_atom_site_fract_x
+_atom_site_fract_y
+_atom_site_fract_z
+Cs   0.00000   0.00000   0.00000
+Cl   0.50000   0.50000   0.50000
+
