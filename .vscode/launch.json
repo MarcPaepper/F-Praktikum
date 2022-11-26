@@ -1,6 +1,7 @@
 {
     "version": "0.2.0",
     "configurations": [
+    
         {
             "name": "Jod: Ak",
             "type": "python",
@@ -8,7 +9,7 @@
             "program": "${file}",
             "console": "integratedTerminal",
             "cwd": "${workspaceFolder}/Joddissoziation"
-        }, 
+        },
         {
             "name": "Grav: Ak",
             "type": "python",
@@ -16,6 +17,14 @@
             "program": "${file}",
             "console": "integratedTerminal",
             "cwd": "${workspaceFolder}/Gravimetrie"
+        },
+        {
+            "name": "xray: Ak",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}/Röntgen"
         }
     ]
 }
