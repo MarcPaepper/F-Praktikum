@@ -34,7 +34,7 @@ param_bounds=([-np.inf,-np.inf,0,0,-30,-np.inf,-np.inf],[np.inf,np.inf,np.inf,np
 def gaussian(x, x_0, amplitude, fwhm, noiseOffset, noiseSlope):
 	sigma = fwhm / (2 * math.sqrt(2 * math.log(2)))
 	noise = noiseOffset + (x - x_0) * noiseSlope
-	gauss = math.e ** (- 4 * math.log(2) * ((x - x_0) ** 2)/(sigma ** 2))
+	gauss = math.e ** (- 0.5 * ((x - x_0) ** 2)/(sigma ** 2))
 	return amplitude * gauss + noise
 	
 def lorentzian(x, x_0, amplitude, fwhm, noiseOffset, noiseSlope):
@@ -73,6 +73,7 @@ for filename, color, label, calcPeak in messreihen:
 		parG, pcovG = curve_fit(gaussian,     angles, intensities, p0=initGauss)
 		parL, pcovL = curve_fit(lorentzian,   angles, intensities, p0=initLorentz)
 		parL[2] = abs(parL[2])
+		parG[2] = abs(parG[2])
 		
 		initVoigt[0] = (parG[0] + parL[0])/2
 		initVoigt[1] = (parG[1] + parL[1])/2
