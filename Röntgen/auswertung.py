@@ -148,7 +148,7 @@ for filename, color, label, calcPeak in messreihen:
 	plot.xlabel("Winkel")
 	plot.ylabel(f"Intensität")
 	if (savePlots):
-		plot.savefig("Abbildungen/" + filename.replace(".txt", ".png"), dpi=300, transparent = True)
+		plot.savefig("Abbildungen/" + filename.replace(".txt", ".png"), dpi=300, transparent = False)
 	if(first or drawPlots):
 		plot.show()
 		first = False
