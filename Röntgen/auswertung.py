@@ -17,17 +17,17 @@ messreihen = []	#  file name                  	color	      	label											calc
 # messreihen.append(["221109_Sigrob_Peak3.txt", 	"orange",	"Silizium grob, Winkel xx-xx",					True])
 # messreihen.append(["221109_unbekanntesSalz.txt","goldenrod", 	"unbekanntes erstes Salz, Winkel 10-120 Grad",	False])
 messreihen.append(["221110_unbekanntesSalz.txt","goldenrod", 	"unbekanntes erstes Salz, Winkel 10-120 Grad",	False])
-messreihen.append(["221110_unbekanntesSalz.txt","goldenrod", 	"unbekanntes erstes Salz, Winkel 10-120 Grad",	26, 29])
-messreihen.append(["221110_unbekanntesSalz.txt","goldenrod", 	"unbekanntes erstes Salz, Winkel 10-120 Grad",	44, 48])
-messreihen.append(["221110_unbekanntesSalz.txt","goldenrod", 	"unbekanntes erstes Salz, Winkel 10-120 Grad",	52, 56])
-messreihen.append(["221110_unbekanntesSalz.txt","goldenrod", 	"unbekanntes erstes Salz, Winkel 10-120 Grad",	55, 59])
-messreihen.append(["221110_unbekanntesSalz.txt","goldenrod", 	"unbekanntes erstes Salz, Winkel 10-120 Grad",	65, 68])
-messreihen.append(["221110_unbekanntesSalz.txt","goldenrod", 	"unbekanntes erstes Salz, Winkel 10-120 Grad",	74, 77])
-messreihen.append(["221110_unbekanntesSalz.txt","goldenrod", 	"unbekanntes erstes Salz, Winkel 83-86 Grad",	83, 86])
-messreihen.append(["221110_unbekanntesSalz.txt","goldenrod", 	"unbekanntes erstes Salz, Winkel 100-103 Grad",	100, 103])
+messreihen.append(["221110_unbekanntesSalz.txt","goldenrod", 	"unbekanntes erstes Salz, Winkel 26-29 Grad",	26, 29, "unbSalzPeak1"])
+messreihen.append(["221110_unbekanntesSalz.txt","goldenrod", 	"unbekanntes erstes Salz, Winkel 44-48 Grad",	44, 48, "unbSalzPeak2"])
+messreihen.append(["221110_unbekanntesSalz.txt","goldenrod", 	"unbekanntes erstes Salz, Winkel 52-56 Grad",	52, 56, "unbSalzPeak3"])
+messreihen.append(["221110_unbekanntesSalz.txt","goldenrod", 	"unbekanntes erstes Salz, Winkel 55-59 Grad",	55, 59, "unbSalzPeak4"])
+messreihen.append(["221110_unbekanntesSalz.txt","goldenrod", 	"unbekanntes erstes Salz, Winkel 65-68 Grad",	65, 68, "unbSalzPeak5"])
+messreihen.append(["221110_unbekanntesSalz.txt","goldenrod", 	"unbekanntes erstes Salz, Winkel 74-77 Grad",	74, 77, "unbSalzPeak6"])
+messreihen.append(["221110_unbekanntesSalz.txt","goldenrod", 	"unbekanntes erstes Salz, Winkel 83-86 Grad",	83, 86, "unbSalzPeak7"])
+messreihen.append(["221110_unbekanntesSalz.txt","goldenrod", 	"unbekanntes erstes Salz, Winkel 100-103 Grad",	100, 103, "unbSalzPeak8"])
 # messreihen.append(["221110_unbekanntesSalz.txt","goldenrod", 	"unbekanntes erstes Salz, Winkel 10-120 Grad",	107, 110])
-messreihen.append(["221110_unbekanntesSalz.txt","goldenrod", 	"unbekanntes erstes Salz, Winkel 109-112 Grad",	109, 112])
-messreihen.append(["221110_unbekanntesSalz.txt","goldenrod", 	"unbekanntes erstes Salz, Winkel 117-120 Grad",	117, 120])
+messreihen.append(["221110_unbekanntesSalz.txt","goldenrod", 	"unbekanntes erstes Salz, Winkel 109-112 Grad",	109, 112, "unbSalzPeak9"])
+messreihen.append(["221110_unbekanntesSalz.txt","goldenrod", 	"unbekanntes erstes Salz, Winkel 117-120 Grad",	117, 120, True, "unbSalzPeak10"])
 # messreihen.append(["221110_unbekanntesSalz.txt","goldenrod", 	"unbekanntes erstes Salz, Winkel 10-120 Grad",	, ])
 
 # Plot all data
@@ -66,6 +66,7 @@ for messreihe in messreihen:
 	# check which arguments were given
 	if (len(messreihe) == 4):
 		filename, color, label, calcPeak = messreihe
+		saveName = filename
 		
 		# read in data
 		datapoints = readRawData(filename)
@@ -81,8 +82,8 @@ for messreihe in messreihen:
 		
 		# draw all fits
 		drawG = drawL = drawV = True
-	else:
-		filename, color, label, minX, maxX = messreihe
+	elif (len(messreihe) == 6):
+		filename, color, label, minX, maxX, saveName = messreihe
 		calcPeak = True
 		
 		# read in data
@@ -105,7 +106,31 @@ for messreihe in messreihen:
 		# only draw voigt because it has the best results
 		drawG = drawL = False
 		drawV = True
-	
+	else:
+		filename, color, label, minX, maxX, drawAll, saveName = messreihe
+		calcPeak = True
+		
+		# read in data
+		datapoints = readRawData(filename)
+		
+		# delete 0 values and values outside the bounds
+		while 0 < len(datapoints):
+			if (datapoints[0][1] == 0 or datapoints[0][0] < minX):
+				datapoints.pop(0)
+			else:
+				break
+		
+		while 0 < len(datapoints):
+			dp = datapoints[len(datapoints)-1]
+			if (dp[0] > maxX):
+				datapoints.pop(len(datapoints)-1)
+			else:
+				break
+		
+		if (drawAll):
+			drawG = drawL = drawV = True
+		else:
+			drawG = drawL = drawV = False
 	# delete all outliers
 	i = 1
 	while i < len(datapoints) - 1:
@@ -134,13 +159,23 @@ for messreihe in messreihen:
 		initVoigt[3] = parL[2]
 		initVoigt[5] = (parG[3] + parL[3])/2
 		initVoigt[6] = (parG[4] + parL[4])/2
-		parV, pcovV = curve_fit(pseudo_voigt, angles, intensities, p0=initVoigt, bounds=param_bounds)
-			# vSuccess = True
-		# except Exception as inst:
-			# print(type(inst))    # the exception instance
-			# print(inst.args)     # arguments stored in .args
-			# print(inst)
-			# vSuccess = False
+		
+		i = 0
+		vSuccess = False
+		while not vSuccess and i < 2:
+			try:
+				if (i == 0):
+					parV, pcovV = curve_fit(pseudo_voigt, angles, intensities, p0=initVoigt, bounds=param_bounds)
+				if (i == 1):
+					parV, pcovV = curve_fit(pseudo_voigt, angles, intensities, p0=initVoigt)
+				vSuccess = True
+			except Exception as inst:
+				print(type(inst))    # the exception instance
+				print(inst.args)     # arguments stored in .args
+				print(inst)
+				vSuccess = False
+				parV = initVoigt
+			i += 1
 		parStDevG = np.sqrt(np.diag(pcovG))
 		parStDevL = np.sqrt(np.diag(pcovL))
 		parStDevV = np.sqrt(np.diag(pcovV))
@@ -187,11 +222,11 @@ for messreihe in messreihen:
 		calcIntL = [lorentzian(angle, parL[0], parL[1], parL[2], parL[3], parL[4]) for angle in calcAngles]
 		calcIntV = [pseudo_voigt(angle, parV[0], parV[1], parV[2], parV[3], parV[4], parV[5], parV[6]) for angle in calcAngles]
 		
-		if (drawG):
+		if (drawG and not vSuccess):
 			plot.plot(calcAngles, calcIntG, zorder=.3, color="blue",       	label=f"Fit (Gauß)") #  - $   R^2={round(rSquaredG, 4)}$
-		if (drawL):
+		if (drawL and not vSuccess):
 			plot.plot(calcAngles, calcIntV, zorder=.7, color="blueviolet", 	label=f"Fit (Voigt)")
-		if (drawV):
+		if (drawV and vSuccess):
 			plot.plot(calcAngles, calcIntL, zorder=.5, color="mediumvioletred",label=f"Fit (Lorentz)")
 	
 	# plot data
@@ -205,7 +240,7 @@ for messreihe in messreihen:
 	plot.xlabel("Winkel")
 	plot.ylabel(f"Intensität")
 	if (savePlots):
-		plot.savefig("Abbildungen/" + filename.replace(".txt", ".png"), dpi=300, transparent = True)
+		plot.savefig("Abbildungen/" + (saveName.replace(".txt", "") + ".png"), dpi=300, transparent = True)
 	if(first or drawPlots):
 		plot.show()
 		first = False
