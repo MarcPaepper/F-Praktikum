@@ -4,8 +4,6 @@ Röntgen/Abbildungen/
 **/Abbildungen/**
 **/Abbildungen
 **/Abbildungen/
-/Röntgen/auswertung.py
-*.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
