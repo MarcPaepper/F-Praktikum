@@ -2,6 +2,20 @@ import matplotlib.pyplot as plot
 from InputOutput import readRawData
 
 channelNumbers = range(1024)
+channels = readRawData("Messdaten/Glühlampe_ohne_alles.txt")
+channelsB = readRawData("Messdaten/Glühlampe_Filter_blau.txt")
+channelsR = readRawData("Messdaten/Glühlampe_Filter_rot.txt")
+channelsT1 = readRawData("Messdaten/Glühlampe_Filter_türkis.txt")
+channelsT2 = readRawData("Messdaten/Glühlampe_Filter_türkis_2.txt")
+channelsT3 = readRawData("Messdaten/Glühlampe_Filter_türkis_3.txt")
+plot.plot(channels, color="yellow")
+plot.plot(channelsB, color="blue")
+plot.plot(channelsR, color="red")
+plot.plot(channelsT1, color="turquoise")
+plot.plot(channelsT2, color="turquoise")
+plot.plot(channelsT3, color="turquoise")
+plot.show()
+
 channelsWasser = readRawData("Messdaten/TransmissionWasser.txt")
 channelsLeer = readRawData("Messdaten/Transmission_leere_Küvette.txt")
 channelsGlykol = readRawData("Messdaten/TransmissionGlykol.txt")
