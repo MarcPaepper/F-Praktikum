@@ -9,14 +9,26 @@ from InputOutput import readRawData
 
 
 messreihen = []	#  file name                  	color	      	label											calcPeak
-messreihen.append(["221109_Sifein_Peak1.txt", 	"darkgreen",	"Silizium fein, Winkel 27-30 Grad",				True])
-messreihen.append(["221109_Sifein_Peak2.txt", 	"forestgreen",	"Silizium fein, Winkel 46-49 Grad",				True])
-messreihen.append(["221109_Sifein_Peak3.txt", 	"limegreen",	"Silizium fein, Winkel 55-58 Grad",				True])
-messreihen.append(["221109_Sigrob_Peak1.txt", 	"sienna",		"Silizium grob, Winkel xx-xx",					True])
-messreihen.append(["221109_Sigrob_Peak2.txt", 	"coral",	"Silizium grob, Winkel xx-xx",					True])
-messreihen.append(["221109_Sigrob_Peak3.txt", 	"orange",	"Silizium grob, Winkel xx-xx",					True])
+# messreihen.append(["221109_Sifein_Peak1.txt", 	"darkgreen",	"Silizium fein, Winkel 27-30 Grad",				True])
+# messreihen.append(["221109_Sifein_Peak2.txt", 	"forestgreen",	"Silizium fein, Winkel 46-49 Grad",				True])
+# messreihen.append(["221109_Sifein_Peak3.txt", 	"limegreen",	"Silizium fein, Winkel 55-58 Grad",				True])
+# messreihen.append(["221109_Sigrob_Peak1.txt", 	"sienna",		"Silizium grob, Winkel xx-xx",					True])
+# messreihen.append(["221109_Sigrob_Peak2.txt", 	"coral",	"Silizium grob, Winkel xx-xx",					True])
+# messreihen.append(["221109_Sigrob_Peak3.txt", 	"orange",	"Silizium grob, Winkel xx-xx",					True])
 # messreihen.append(["221109_unbekanntesSalz.txt","goldenrod", 	"unbekanntes erstes Salz, Winkel 10-120 Grad",	False])
 messreihen.append(["221110_unbekanntesSalz.txt","goldenrod", 	"unbekanntes erstes Salz, Winkel 10-120 Grad",	False])
+messreihen.append(["221110_unbekanntesSalz.txt","goldenrod", 	"unbekanntes erstes Salz, Winkel 10-120 Grad",	26, 29])
+messreihen.append(["221110_unbekanntesSalz.txt","goldenrod", 	"unbekanntes erstes Salz, Winkel 10-120 Grad",	44, 48])
+messreihen.append(["221110_unbekanntesSalz.txt","goldenrod", 	"unbekanntes erstes Salz, Winkel 10-120 Grad",	52, 56])
+messreihen.append(["221110_unbekanntesSalz.txt","goldenrod", 	"unbekanntes erstes Salz, Winkel 10-120 Grad",	55, 59])
+messreihen.append(["221110_unbekanntesSalz.txt","goldenrod", 	"unbekanntes erstes Salz, Winkel 10-120 Grad",	65, 68])
+messreihen.append(["221110_unbekanntesSalz.txt","goldenrod", 	"unbekanntes erstes Salz, Winkel 10-120 Grad",	74, 77])
+messreihen.append(["221110_unbekanntesSalz.txt","goldenrod", 	"unbekanntes erstes Salz, Winkel 83-86 Grad",	83, 86])
+messreihen.append(["221110_unbekanntesSalz.txt","goldenrod", 	"unbekanntes erstes Salz, Winkel 100-103 Grad",	100, 103])
+# messreihen.append(["221110_unbekanntesSalz.txt","goldenrod", 	"unbekanntes erstes Salz, Winkel 10-120 Grad",	107, 110])
+messreihen.append(["221110_unbekanntesSalz.txt","goldenrod", 	"unbekanntes erstes Salz, Winkel 109-112 Grad",	109, 112])
+messreihen.append(["221110_unbekanntesSalz.txt","goldenrod", 	"unbekanntes erstes Salz, Winkel 117-120 Grad",	117, 120])
+# messreihen.append(["221110_unbekanntesSalz.txt","goldenrod", 	"unbekanntes erstes Salz, Winkel 10-120 Grad",	, ])
 
 # Plot all data
 
@@ -50,17 +62,58 @@ def pseudo_voigt(x, x_0, amplitude, fwhm_gauss, fwhm_lorentz, eta, noiseOffset, 
 	lorentz = lorentzian(x, x_0, eta, fwhm_lorentz, 0, 0)
 	return amplitude * (eta * lorentz + (1 - eta) * gauss) + noise
 
-for filename, color, label, calcPeak in messreihen:
-	# read in data
-	datapoints = readRawData(filename)
-	[minX, minY] = [min(l) for l in zip(*datapoints)]
-	[maxX, maxY] = [max(l) for l in zip(*datapoints)]
-	# delete 0 values at beginning
-	while 0 < len(datapoints):
-		if (datapoints[0][1] == 0):
-			datapoints.pop(0)
+for messreihe in messreihen:
+	# check which arguments were given
+	if (len(messreihe) == 4):
+		filename, color, label, calcPeak = messreihe
+		
+		# read in data
+		datapoints = readRawData(filename)
+		[minX, minY] = [min(l) for l in zip(*datapoints)]
+		[maxX, maxY] = [max(l) for l in zip(*datapoints)]
+		
+		# delete 0 values at beginning
+		while 0 < len(datapoints):
+			if (datapoints[0][1] == 0):
+				datapoints.pop(0)
+			else:
+				break
+		
+		# draw all fits
+		drawG = drawL = drawV = True
+	else:
+		filename, color, label, minX, maxX = messreihe
+		calcPeak = True
+		
+		# read in data
+		datapoints = readRawData(filename)
+		
+		# delete 0 values and values outside the bounds
+		while 0 < len(datapoints):
+			if (datapoints[0][1] == 0 or datapoints[0][0] < minX):
+				datapoints.pop(0)
+			else:
+				break
+		
+		while 0 < len(datapoints):
+			dp = datapoints[len(datapoints)-1]
+			if (dp[0] > maxX):
+				datapoints.pop(len(datapoints)-1)
+			else:
+				break
+		
+		# only draw voigt because it has the best results
+		drawG = drawL = False
+		drawV = True
+	
+	# delete all outliers
+	i = 1
+	while i < len(datapoints) - 1:
+		if (datapoints[i - 1][1] + 100 < datapoints[i][1] and datapoints[i + 1][1] + 100 < datapoints[i][1]):
+			datapoints.pop(i)
 		else:
-			break
+			i += 1
+	
 	angles 		= [row[0] for row in datapoints]
 	intensities = [row[1] for row in datapoints]
 	
@@ -134,14 +187,18 @@ for filename, color, label, calcPeak in messreihen:
 		calcIntL = [lorentzian(angle, parL[0], parL[1], parL[2], parL[3], parL[4]) for angle in calcAngles]
 		calcIntV = [pseudo_voigt(angle, parV[0], parV[1], parV[2], parV[3], parV[4], parV[5], parV[6]) for angle in calcAngles]
 		
-		plot.plot(calcAngles, calcIntG, zorder=.3, color="blue",       	label=f"Fit (Gauß)") #  - $   R^2={round(rSquaredG, 4)}$
-		plot.plot(calcAngles, calcIntV, zorder=.7, color="blueviolet", 	label=f"Fit (Voigt)")
-		plot.plot(calcAngles, calcIntL, zorder=.5, color="mediumvioletred",label=f"Fit (Lorentz)")
+		if (drawG):
+			plot.plot(calcAngles, calcIntG, zorder=.3, color="blue",       	label=f"Fit (Gauß)") #  - $   R^2={round(rSquaredG, 4)}$
+		if (drawL):
+			plot.plot(calcAngles, calcIntV, zorder=.7, color="blueviolet", 	label=f"Fit (Voigt)")
+		if (drawV):
+			plot.plot(calcAngles, calcIntL, zorder=.5, color="mediumvioletred",label=f"Fit (Lorentz)")
 	
 	# plot data
 	plot.plot(angles, intensities, label = "Messwerte", color = color)
 	minX = minX - (+minX % 0.5)
 	maxX = maxX + (-maxX % 0.5)
+	maxY = max(intensities)
 	maxY = (1.2 * maxY) + (-maxY * 1.2) % (10 ** math.floor(math.log10(maxY * 0.4)))
 	plot.axis([minX, maxX, 0, maxY])
 	plot.legend(loc="upper left")
