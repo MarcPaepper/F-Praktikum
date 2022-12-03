@@ -25,6 +25,14 @@
             "program": "${file}",
             "console": "integratedTerminal",
             "cwd": "${workspaceFolder}/Röntgen"
+        },
+        {
+            "name": "moess: Ak",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}/Mößbauer"
         }
     ]
 }
