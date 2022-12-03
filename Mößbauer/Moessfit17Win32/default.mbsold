@@ -1,0 +1,51 @@
+######################
+FITPARAMETER
+B 33 1
+Vzz 50 2
+eta 0 0.1
+theta 0 5
+phi 0 5
+CS 0.4 0.02
+omega 0.15 0.01
+I0 1 1
+A0 1 1
+beta 54.7 3
+gamma 0 5
+###############################################################
+THEORY
+BL I0
+SHc B Vzz eta theta phi CS omega A0 beta gamma
+###############################################################
+FUNCTIONS
+#A0 = I0 * 0.05
+###############################################################
+COMMANDS
+A A0
+I0 I0
+MaxIter 5000
+Errors Hesse
+#ForceSimplex
+#ConvergenceCriterium 0.01
+#MEM 500 0.013 0.1 lambda 70000
+#HR 0.1 lamda
+#TransmissionIntegral ta 0.0515 omega_abs fr
+#UnfoldedData velocity intensity chn
+#CosineSmearing CosineSmearing r0 r1 r2 z1 z2
+#Nucleus Egamma g12 g32 Q mass
+###############################################################
+RUN
+"C:/Users/Kryolabor/Desktop/Moessfit17Win32/default.fld" 1
+###############################################################
+PLOT
+runs 1
+###############################################################
+###############################################################
+
+FITDATA
+           T[K]	              B	          Error	            Vzz	          Error	            eta	          Error	          theta	          Error	            phi	          Error	             CS	          Error	          omega	          Error	             I0	          Error	             A0	          Error	           beta	          Error	          gamma	          Error	
+           1.00	          45.30	      press 'e'	         179.41	      press 'e'	        -0.4348	      press 'e'	        -375.25	      press 'e'	         248.88	      press 'e'	        2.72797	      press 'e'	        0.13323	      press 'e'	       99926.22	      press 'e'	        4566.20	      press 'e'	        78.2513	      press 'e'	          19.46	      press 'e'	
+###################
+FITSTATISTICS
+Total chi2: 2752.286156
+           T[K]	       chi2_red	 K-S-confidence	       MEM-diff	     MEM-lambda	 MEM-iterations
+           1.00	           5.50	          0.000	          0.000	          0.000	              0

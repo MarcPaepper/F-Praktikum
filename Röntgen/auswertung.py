@@ -17,22 +17,23 @@ messreihen = []	#  file name                  	color	      	label											calc
 # messreihen.append(["221109_Sigrob_Peak3.txt", 	"orange",	"Silizium grob, Winkel xx-xx",					True])
 # messreihen.append(["221109_unbekanntesSalz.txt","goldenrod", 	"unbekanntes erstes Salz, Winkel 10-120 Grad",	False])
 messreihen.append(["221110_unbekanntesSalz.txt","goldenrod", 	"unbekanntes erstes Salz, Winkel 10-120 Grad",	False])
-messreihen.append(["221110_unbekanntesSalz.txt","goldenrod", 	"unbekanntes erstes Salz, Winkel 26-29 Grad",	26, 29, "unbSalzPeak1"])
-messreihen.append(["221110_unbekanntesSalz.txt","goldenrod", 	"unbekanntes erstes Salz, Winkel 44-48 Grad",	44, 48, "unbSalzPeak2"])
-messreihen.append(["221110_unbekanntesSalz.txt","goldenrod", 	"unbekanntes erstes Salz, Winkel 52-56 Grad",	52, 56, "unbSalzPeak3"])
-messreihen.append(["221110_unbekanntesSalz.txt","goldenrod", 	"unbekanntes erstes Salz, Winkel 55-59 Grad",	55, 59, "unbSalzPeak4"])
-messreihen.append(["221110_unbekanntesSalz.txt","goldenrod", 	"unbekanntes erstes Salz, Winkel 65-68 Grad",	65, 68, "unbSalzPeak5"])
-messreihen.append(["221110_unbekanntesSalz.txt","goldenrod", 	"unbekanntes erstes Salz, Winkel 74-77 Grad",	74, 77, "unbSalzPeak6"])
-messreihen.append(["221110_unbekanntesSalz.txt","goldenrod", 	"unbekanntes erstes Salz, Winkel 83-86 Grad",	83, 86, "unbSalzPeak7"])
-messreihen.append(["221110_unbekanntesSalz.txt","goldenrod", 	"unbekanntes erstes Salz, Winkel 100-103 Grad",	100, 103, "unbSalzPeak8"])
-# messreihen.append(["221110_unbekanntesSalz.txt","goldenrod", 	"unbekanntes erstes Salz, Winkel 10-120 Grad",	107, 110])
-messreihen.append(["221110_unbekanntesSalz.txt","goldenrod", 	"unbekanntes erstes Salz, Winkel 109-112 Grad",	109, 112, "unbSalzPeak9"])
-messreihen.append(["221110_unbekanntesSalz.txt","goldenrod", 	"unbekanntes erstes Salz, Winkel 117-120 Grad",	117, 120, True, "unbSalzPeak10"])
+# messreihen.append(["221110_unbekanntesSalz.txt","goldenrod", 	"unbekanntes erstes Salz, Winkel 26-29 Grad",	26, 29, "unbSalzPeak1"])
+messreihen.append(["221110_unbekanntesSalz.txt","goldenrod", 	"unbekanntes erstes Salz, Winkel 26-29 Grad",	29, 34, "unbSalzPeak1,5"])
+# messreihen.append(["221110_unbekanntesSalz.txt","goldenrod", 	"unbekanntes erstes Salz, Winkel 44-48 Grad",	44, 48, "unbSalzPeak2"])
+# messreihen.append(["221110_unbekanntesSalz.txt","goldenrod", 	"unbekanntes erstes Salz, Winkel 52-56 Grad",	52, 56, "unbSalzPeak3"])
+# messreihen.append(["221110_unbekanntesSalz.txt","goldenrod", 	"unbekanntes erstes Salz, Winkel 55-59 Grad",	55, 59, "unbSalzPeak4"])
+# messreihen.append(["221110_unbekanntesSalz.txt","goldenrod", 	"unbekanntes erstes Salz, Winkel 65-68 Grad",	65, 68, "unbSalzPeak5"])
+# messreihen.append(["221110_unbekanntesSalz.txt","goldenrod", 	"unbekanntes erstes Salz, Winkel 74-77 Grad",	74, 77, "unbSalzPeak6"])
+# messreihen.append(["221110_unbekanntesSalz.txt","goldenrod", 	"unbekanntes erstes Salz, Winkel 83-86 Grad",	83, 86, "unbSalzPeak7"])
+# messreihen.append(["221110_unbekanntesSalz.txt","goldenrod", 	"unbekanntes erstes Salz, Winkel 100-103 Grad",	100, 103, "unbSalzPeak8"])
+# # messreihen.append(["221110_unbekanntesSalz.txt","goldenrod", 	"unbekanntes erstes Salz, Winkel 10-120 Grad",	107, 110])
+# messreihen.append(["221110_unbekanntesSalz.txt","goldenrod", 	"unbekanntes erstes Salz, Winkel 109-112 Grad",	109, 112, "unbSalzPeak9"])
+# messreihen.append(["221110_unbekanntesSalz.txt","goldenrod", 	"unbekanntes erstes Salz, Winkel 117-120 Grad",	114, 120, True, "unbSalzPeak10", 119.5])
 # messreihen.append(["221110_unbekanntesSalz.txt","goldenrod", 	"unbekanntes erstes Salz, Winkel 10-120 Grad",	, ])
 
 # Plot all data
 
-drawPlots = True
+drawPlots = False
 savePlots = True
 first = True
 
@@ -58,8 +59,8 @@ def lorentzian(x, x_0, amplitude, fwhm, noiseOffset, noiseSlope):
 def pseudo_voigt(x, x_0, amplitude, fwhm_gauss, fwhm_lorentz, eta, noiseOffset, noiseSlope):
 	eta = max(min(eta/100, 1), 0)
 	noise = noiseOffset + (x - x_0) * noiseSlope
-	gauss = gaussian(x, x_0, 1 - eta, fwhm_gauss, 0, 0)
-	lorentz = lorentzian(x, x_0, eta, fwhm_lorentz, 0, 0)
+	gauss = gaussian(x, x_0, 1, fwhm_gauss, 0, 0)
+	lorentz = lorentzian(x, x_0, 1, fwhm_lorentz, 0, 0)
 	return amplitude * (eta * lorentz + (1 - eta) * gauss) + noise
 
 for messreihe in messreihen:
@@ -67,6 +68,7 @@ for messreihe in messreihen:
 	if (len(messreihe) == 4):
 		filename, color, label, calcPeak = messreihe
 		saveName = filename
+		useStartValue = False
 		
 		# read in data
 		datapoints = readRawData(filename)
@@ -85,6 +87,7 @@ for messreihe in messreihen:
 	elif (len(messreihe) == 6):
 		filename, color, label, minX, maxX, saveName = messreihe
 		calcPeak = True
+		useStartValue = False
 		
 		# read in data
 		datapoints = readRawData(filename)
@@ -107,7 +110,8 @@ for messreihe in messreihen:
 		drawG = drawL = False
 		drawV = True
 	else:
-		filename, color, label, minX, maxX, drawAll, saveName = messreihe
+		filename, color, label, minX, maxX, drawAll, saveName, startValue = messreihe
+		useStartValue = True
 		calcPeak = True
 		
 		# read in data
@@ -126,7 +130,7 @@ for messreihe in messreihen:
 				datapoints.pop(len(datapoints)-1)
 			else:
 				break
-		
+		print("hallo ballo")
 		if (drawAll):
 			drawG = drawL = drawV = True
 		else:
@@ -139,14 +143,15 @@ for messreihe in messreihen:
 		else:
 			i += 1
 	
-	angles 		= [row[0] for row in datapoints]
-	intensities = [row[1] for row in datapoints]
+	angles		= [row[0] for row in datapoints]
+	intensities	= [row[1] for row in datapoints]
+	fig = plot.figure(figsize=(8, 5.5), dpi=100)
 	
 	if (calcPeak):
 		# fit peak curves
 		angles = np.array(angles)
 		intensities = np.array(intensities)
-		initGauss[0] = initLorentz[0] = initVoigt[0] = (maxX + minX) / 2 # set x_0 at the middle
+		initGauss[0] = initLorentz[0] = initVoigt[0] = startValue if useStartValue else (maxX + minX) / 2 # set x_0 at the middle
 		
 		parG, pcovG = curve_fit(gaussian,     angles, intensities, p0=initGauss)
 		parL, pcovL = curve_fit(lorentzian,   angles, intensities, p0=initLorentz)
@@ -189,30 +194,33 @@ for messreihe in messreihen:
 		rSquaredV = r2_score(intensities, calcIntV)
 		
 		# print fit parameters
-		print(f" --- Gauss Fit for {label} ---")
-		print(f"x_0 		{round(parG[0], 3)}    +-    {round(parStDevG[0], 3)}")
-		print(f"amplitude	{round(parG[1], 3)}    +-    {round(parStDevG[1], 3)}")
-		print(f"fwhm 		{round(parG[2], 3)}    +-    {round(parStDevG[2], 3)}")
-		print(f"noise offset 	{round(parG[3], 3)}    +-    {round(parStDevG[3], 3)}")
-		print(f"noise slope 	{round(parG[4], 3)}    +-    {round(parStDevG[4], 3)}")
-		print(f"R² 		{round(rSquaredG, 4)}\r\n")
+		# print(f" --- Gauss Fit for {label} ---")
+		# print(f"x_0 		{round(parG[0], 3)}    +-    {round(parStDevG[0], 3)}")
+		# print(f"amplitude	{round(parG[1], 3)}    +-    {round(parStDevG[1], 3)}")
+		# print(f"fwhm 		{round(parG[2], 3)}    +-    {round(parStDevG[2], 3)}")
+		# print(f"noise offset 	{round(parG[3], 3)}    +-    {round(parStDevG[3], 3)}")
+		# print(f"noise slope 	{round(parG[4], 3)}    +-    {round(parStDevG[4], 3)}")
+		# print(f"R² 		{round(rSquaredG, 4)}\r\n")
 		
-		print(f" --- Lorentz Fit for {label} ---")
-		print(f"x_0 		{round(parL[0], 3)}    +-    {round(parStDevL[0], 3)}")
-		print(f"amplitude	{round(parL[1], 3)}    +-    {round(parStDevL[1], 3)}")
-		print(f"fwhm 		{round(parL[2], 3)}    +-    {round(parStDevL[2], 3)}")
-		print(f"noise offset 	{round(parL[3], 3)}    +-    {round(parStDevL[3], 3)}")
-		print(f"noise slope 	{round(parL[4], 3)}    +-    {round(parStDevL[4], 3)}")
-		print(f"R² 		{round(rSquaredL, 4)}\r\n")
+		# print(f" --- Lorentz Fit for {label} ---")
+		# print(f"x_0 		{round(parL[0], 3)}    +-    {round(parStDevL[0], 3)}")
+		# print(f"amplitude	{round(parL[1], 3)}    +-    {round(parStDevL[1], 3)}")
+		# print(f"fwhm 		{round(parL[2], 3)}    +-    {round(parStDevL[2], 3)}")
+		# print(f"noise offset 	{round(parL[3], 3)}    +-    {round(parStDevL[3], 3)}")
+		# print(f"noise slope 	{round(parL[4], 3)}    +-    {round(parStDevL[4], 3)}")
+		# print(f"R² 		{round(rSquaredL, 4)}\r\n")
 		
 		print(f" --- Voigt Fit for {label} ---")
 		print(f"x_0 		{round(parV[0], 3)}    +-    {round(parStDevV[0], 3)}")
 		print(f"amplitude	{round(parV[1], 3)}    +-    {round(parStDevV[1], 3)}")
 		print(f"fwhm_gauss 	{round(parV[2], 3)}    +-    {round(parStDevV[2], 3)}")
 		print(f"fwhm_lorentz 	{round(parV[3], 3)}    +-    {round(parStDevV[3], 3)}")
+		eta_comb = 0.5 * (parV[4]*parV[3])/100 + ((1-parV[4]/100)*parV[2]) + 0.25 * parG[2] + 0.25 * parL[2]
+		eta_comb_err = 0.5 * (parV[4]/100*parStDevV[3] + (1-parV[4]/100)*parStDevV[2]) + 0.25 * parStDevG[2] + 0.25 * parStDevL[2]
+		print(f"fwhm_comb 	{round(eta_comb, 3)}    +-    {round(eta_comb_err, 3)}")
 		print(f"eta 		{round((parV[4]/100), 3)}    +-    {round((parStDevV[4]/100), 3)}")
-		print(f"noise offset 	{round(parV[5], 3)}    +-    {round(parStDevV[5], 3)}")
-		print(f"noise slope 	{round(parV[6], 3)}    +-    {round(parStDevV[6], 3)}")
+		# print(f"noise offset 	{round(parV[5], 3)}    +-    {round(parStDevV[5], 3)}")
+		# print(f"noise slope 	{round(parV[6], 3)}    +-    {round(parStDevV[6], 3)}")
 		print(f"R² 		{round(rSquaredV, 4)}\r\n\r\n\r\n")
 		
 		
@@ -237,12 +245,12 @@ for messreihe in messreihen:
 	maxY = (1.2 * maxY) + (-maxY * 1.2) % (10 ** math.floor(math.log10(maxY * 0.4)))
 	plot.axis([minX, maxX, 0, maxY])
 	plot.legend(loc="upper left")
-	plot.xlabel("Winkel")
+	plot.xlabel("Winkel ($2\\theta$) in °")
 	plot.ylabel(f"Intensität")
 	if (savePlots):
-		plot.savefig("Abbildungen/" + filename.replace(".txt", ".png"), dpi=300, transparent = True)
+		plot.savefig("Abbildungen/" + saveName.replace(".txt", "") + ".png", dpi=300, transparent = True)
 	if(first or drawPlots):
 		plot.show()
 		first = False
-	if (not (savePlots or drawPlots)):
-		break
+	# if (not (savePlots or drawPlots)):
+	# 	break
