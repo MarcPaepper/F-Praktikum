@@ -49,7 +49,7 @@ def gaussian(x, x_0, amplitude, fwhm, noiseOffset, noiseSlope):
 	noise = noiseOffset + (x - x_0) * noiseSlope
 	gauss = math.e ** (- 0.5 * ((x - x_0) ** 2)/(sigma ** 2))
 	return amplitude * gauss + noise
-	
+
 def lorentzian(x, x_0, amplitude, fwhm, noiseOffset, noiseSlope):
 	gamma = abs(fwhm) / 2
 	noise = noiseOffset + (x - x_0) * noiseSlope
