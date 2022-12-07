@@ -22,6 +22,26 @@ def readRawData(fileName) -> list[list]:
 			counts.append(int(countNumber))
 	return (channels, counts)
 
+def readRawKalib(fileName) -> list[list]:
+	directory = os.path.dirname(os.path.realpath('__file__'))
+	absFileName = directory + "/" + fileName
+	reader = csv.reader(open(absFileName, 'r'), delimiter='\t', skipinitialspace = True)
+	voltages = []
+	velocities = []
+	velErrs = []
+	voltErrs = []
+	for row in reader:
+		if (row[0].startswith(("!","#"))):
+			continue
+		else:
+			# print(f"row ${row}")
+			volt, vel, velErr, voltErr = row
+			voltages.append(float(volt))
+			velocities.append(float(vel))
+			velErrs.append(float(velErr))
+			voltErrs.append(float(voltErr))
+	return (voltages, velocities, velErrs, voltErrs)
+
 def zipValuesErrors(values: list, errors: list, roundValues: bool = False):
 	negValues = False
 	

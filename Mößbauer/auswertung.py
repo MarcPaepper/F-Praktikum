@@ -5,7 +5,6 @@ import numpy as np
 import math
 from sklearn.metrics import r2_score
 from inputOutput import *
-import math
 
 savePlots = True
 showPlots = True
@@ -143,5 +142,5 @@ def peakFit(caption, fileName, shift, saveName, numberPeaks, startDiff, ymin, ym
 	if(showPlots):
 		plot.show()
 
-peakFit("Eisenfolie", "Eisen_folie_NEU.txt", 4, "Eisen", 6, 0.21, 22000, 32000)
+# peakFit("Eisenfolie", "Eisen_folie_NEU.txt", 4, "Eisen", 6, 0.21, 22000, 32000)
 # auswertung("Stahlfolie", "Stahl_folie.txt", 5, "Stahl", 1)
