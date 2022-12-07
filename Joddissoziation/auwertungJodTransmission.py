@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plot
 from InputOutput import readRawData
+import numpy as np
 
 channelNumbers = range(1024)
 channels = readRawData("Messdaten/Glühlampe_ohne_alles.txt")
@@ -27,33 +28,39 @@ wavelengths1024 = []
 for n in channelNumbers:
     wavelengths1024.append(316.049929 + 0.1500302240 * 2 * n)
 #Tinenauswertung
-# channelsSchwarz1Zu900 = readRawData("Messdaten/Transmission_schwarze_Tinten_1_zu_900.txt")
-# channelsSchwarz2Zu900 = readRawData("Messdaten/Transmission_schwarze_Tinten_2_zu_900.txt")
-# channelsSchwarzUnbekannt = readRawData("Messdaten/Transmission_schwarze_Tinten_unbekannt.txt")
+channelsSchwarz1Zu900 = readRawData("Messdaten/Transmission_schwarze_Tinten_1_zu_900.txt")
+channelsSchwarz2Zu900 = readRawData("Messdaten/Transmission_schwarze_Tinten_2_zu_900.txt")
+channelsSchwarzUnbekannt = readRawData("Messdaten/Transmission_schwarze_Tinten_unbekannt.txt")
 # channelsBlau1Zu100 = readRawData("Messdaten/Transmission_blaue_Tinte_1_zu_100.txt")
 # channelsBlau1Zu200 = readRawData("Messdaten/TransmissionBlaueTinte1zu200.txt")
 # channelsBlau1Zu200 = readRawData("Messdaten/TransmissionBlaueTinte1zu200.txt")
 channelsBlauUnbekannt = readRawData("Messdaten/Transmission_blaue_tinte_unbekannt.txt")
 channelsBlauUnbekanntTrans = []
-# channelsSchwarz1Zu900Trans = []
-# channelsSchwarz2Zu900Trans = []
-# channelsSchwarzUnbekanntTrans = []
+channelsSchwarz1Zu900Trans = []
+channelsSchwarz2Zu900Trans = []
+channelsSchwarzUnbekanntTrans = []
 # channelsBlau1Zu100Trans = []
 # channelsBlau1Zu200Trans = []
-# for chWasser, chSchw1zu900 in zip(channelsWasser, channelsSchwarz1Zu900):
-#     channelsSchwarz1Zu900Trans.append(chSchw1zu900 / chWasser)
-# for chWasser, chSchw2zu900 in zip(channelsWasser, channelsSchwarz2Zu900):
-#     channelsSchwarz2Zu900Trans.append(chSchw2zu900 / chWasser)
-# for chWasser, chSchwUnbekannt in zip(channelsWasser, channelsSchwarzUnbekannt):
-#     channelsSchwarzUnbekanntTrans.append(chSchwUnbekannt / chWasser)
-for chWasser, chBluUnbekannt in zip(channelsWasser, channelsBlauUnbekannt):
-    channelsBlauUnbekanntTrans.append(chBluUnbekannt / chWasser)
-plot.plot(wavelengths1024, channelsBlauUnbekanntTrans, label='Blaue unbekannte Tinte', color = "blue")
-plot.legend(loc="upper left")
-plot.xlabel("Wellenlänge in nm")
-plot.ylabel("Transmission T")
+for chWasser, chSchw1zu900 in zip(channelsWasser, channelsSchwarz1Zu900):
+    channelsSchwarz1Zu900Trans.append(chSchw1zu900 / chWasser)
+for chWasser, chSchw2zu900 in zip(channelsWasser, channelsSchwarz2Zu900):
+    channelsSchwarz2Zu900Trans.append(chSchw2zu900 / chWasser)
+for chWasser, chSchwUnbekannt in zip(channelsWasser, channelsSchwarzUnbekannt):
+    channelsSchwarzUnbekanntTrans.append(chSchwUnbekannt / chWasser)
+# for chWasser, chBluUnbekannt in zip(channelsWasser, channelsBlauUnbekannt):
+#     channelsBlauUnbekanntTrans.append(chBluUnbekannt / chWasser)
+# plot.plot(wavelengths1024, channelsBlauUnbekanntTrans, label='Blaue unbekannte Tinte', color = "blue")
+# plot.legend(loc="upper left")
+# plot.xlabel("Wellenlänge in nm")
+# plot.ylabel("Transmission T")
 # plot.savefig("transparenteKalibrierung", transparent = True)
-plot.show()
+# plot.show()
+#Berechnung der Konzentration 2
+Konzentration1Zu900List = [x / y * 1/900 for (x, y) in zip(channelsSchwarzUnbekanntTrans, channelsSchwarz1Zu900Trans)]
+Konzentration12Zu900List = [x / y * 2/900 for (x, y) in zip(channelsSchwarzUnbekanntTrans, channelsSchwarz2Zu900Trans)]
+print("Mean of Konz1zu900 is ", np.mean(Konzentration1Zu900List))
+print("Mean of Konz2zu900 is ", np.mean(Konzentration12Zu900List))
+
 #Pflanzenölauswertung
 # channelsOlive = readRawData("Messdaten/TransmissionOlivenoelPur.txt")
 # channelsSonne = readRawData("Messdaten/TransmissionSonnenblumenölPur.txt")
