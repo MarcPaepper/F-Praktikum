@@ -33,7 +33,7 @@ runs 1
 
 FITDATA
            T[K]	              B	          Error	            Vzz	          Error	            eta	          Error	          theta	          Error	            phi	          Error	             CS	          Error	          omega	          Error	             I0	          Error	             A0	          Error	
-           1.00	           0.21	      press 'e'	           2.43	      press 'e'	        -0.9838	      press 'e'	          44.64	      press 'e'	          -0.00	      press 'e'	       -0.18289	      press 'e'	        0.13138	      press 'e'	      402155.37	      press 'e'	       36124.02	      press 'e'	
+           1.00	           0.21	           0.20	           2.43	          14.10	        -0.9852	        29.9077	          44.63	         189.29	          -0.00	   125055684.49	       -0.18289	        0.00090	        0.13138	        0.00269	      402155.37	          32.45	       36124.03	         178.22	
 ###################
 FITSTATISTICS
 Total chi2: 554.801871
