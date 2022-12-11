@@ -152,5 +152,13 @@ def showListAsLatexTable(caption: str, label, headers: list[str], valueLists: li
 	
 	print("--- LaTeX Table for (%s) ---\n" % caption)
 	print(text)
+
+def saveListAsCSV(columns: list[list[any]], fileName: str, headers: list[str] = None):
+	file = open(fileName, "w", newline="")
+	writer = csv.writer(file, delimiter="\t")
 	
-	# messagebox.showinfo(caption, text)
+	if (headers != None):
+		writer.writerow(headers)
+	
+	for row in zip(*columns):
+		writer.writerow(row)

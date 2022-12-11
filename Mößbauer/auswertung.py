@@ -12,7 +12,14 @@ showPlots = True
 def lorentzian(x, x_0, amplitude, fwhm):
 	gamma = abs(fwhm) / 2
 	lorentz = (gamma ** 2) / ((x - x_0) ** 2 + gamma ** 2)
+	
 	return amplitude * lorentz
+
+def lorentzianX1(x, offset, x_0, amp, fwhm):
+	value = offset
+	value -= lorentzian(x, x_0, amp, fwhm)
+	
+	return value
 
 def lorentzianX6(x, offset,
 					x_1, x_2, x_3, x_4, x_5, x_6,
@@ -29,7 +36,7 @@ def lorentzianX6(x, offset,
 	return value
 	
 
-def peakFit(caption, fileName, shift, saveName, numberPeaks, startDiff, ymin, ymax):
+def peakFit(caption, fileName, shift, saveName, numberPeaks, startDiff, ymin, ymax, voltage, useRealVelocity):
 	# read data
 	
 	channels, counts = readRawData("Messwerte/" + fileName)
@@ -59,13 +66,6 @@ def peakFit(caption, fileName, shift, saveName, numberPeaks, startDiff, ymin, ym
 	for i in range(0, len(channels)):
 		counts[i] += countsRev[i]
 	
-	# boundaries
-	
-	minX = 0
-	maxX = max(channels)
-	minY = 0
-	maxY = max(counts)
-	
 	# calculate velocity
 	
 	velocities = []
@@ -73,7 +73,15 @@ def peakFit(caption, fileName, shift, saveName, numberPeaks, startDiff, ymin, ym
 	minCh = min(channels)
 	maxCh = max(channels)
 	for i in range(minCh, maxCh+1):
-		velocities.append(math.cos((i / maxCh) * math.pi))
+		vel = math.cos((i / maxCh) * math.pi)
+		if (useRealVelocity):
+			vel = vel * 0.16257 * (1 if voltage == 0 else voltage) + 0.0017
+		velocities.append(vel)
+	
+	# boundaries
+	minX = min(velocities)
+	maxX = max(velocities)
+	maxY = max(counts)
 	
 	# start params
 	offset = maxY
@@ -83,6 +91,8 @@ def peakFit(caption, fileName, shift, saveName, numberPeaks, startDiff, ymin, ym
 	for i in range(numberPeaks):
 		x_0s.append((i - (numberPeaks - 1) / 2) * startDiff)
 	
+	if (numberPeaks == 1):
+		initParams=[(offset, x_0s[0], amp, fwhm)]
 	if (numberPeaks == 6):
 		initParams = [(offset,
 						x_0s[0], x_0s[1], x_0s[2], x_0s[3], x_0s[4], x_0s[5],
@@ -95,7 +105,10 @@ def peakFit(caption, fileName, shift, saveName, numberPeaks, startDiff, ymin, ym
 	# 									amp, amp, amp, amp, amp, amp,
 	# 									fwhm, fwhm, fwhm, fwhm, fwhm, fwhm))
 	
-	par, pcov = curve_fit(lorentzianX6, velocities, counts, p0=initParams)
+	if (numberPeaks == 1):
+		par, pcov = curve_fit(lorentzianX1, velocities, counts, p0=initParams)
+	elif (numberPeaks == 6):
+		par, pcov = curve_fit(lorentzianX6, velocities, counts, p0=initParams)
 	parStDev = np.sqrt(np.diag(pcov))
 	
 	print(f"offset:\t{round(par[0], 2)}\t±\t{round(parStDev[0], 2)}")
@@ -118,15 +131,18 @@ def peakFit(caption, fileName, shift, saveName, numberPeaks, startDiff, ymin, ym
 	
 	showListAsLatexTable(captionL, caption, headers, [ii, x_0s, amps, fwhms])
 	
-	velocitiesFit = np.linspace(-1, 1.01, 1500)
+	velocitiesFit = np.linspace(-20, 20, 10000)
 	for v in velocitiesFit:
-		fitCounts.append(lorentzianX6(v, *par))
+		if (numberPeaks == 6):
+			fitCounts.append(lorentzianX6(v, *par))
+		elif (numberPeaks == 1):
+			fitCounts.append(lorentzianX1(v, *par))
 	
 	# plotting
 	
 	# reasonable boundary
-	minX = -1
-	maxX = 1
+	# minY = [min(y) for y in counts]
+	# maxY = [max(y) for y in counts]
 	# maxY = (1.2 * maxY) + (-maxY * 1.2) % (10 ** math.floor(math.log10(maxY * 0.4)))
 	minY, maxY = (ymin, ymax)
 	
@@ -135,12 +151,81 @@ def peakFit(caption, fileName, shift, saveName, numberPeaks, startDiff, ymin, ym
 	plot.axis([minX, maxX, minY, maxY])
 	
 	plot.legend(loc="lower left")
-	plot.xlabel("Geschwindigkeit (unbekannter Faktor)")
+	plot.xlabel("Geschwindigkeit in ($\mathrm{\\frac{mm}{s}})$")
 	plot.ylabel(f"Anzahl Ereignisse")
+	plot.grid(color="lightgray", linestyle="dashed")
 	if (savePlots):
 		plot.savefig("Abbildungen/" + saveName + ".png", dpi=300, transparent = True)
 	if(showPlots):
 		plot.show()
 
-# peakFit("Eisenfolie", "Eisen_folie_NEU.txt", 4, "Eisen", 6, 0.21, 22000, 32000)
-# auswertung("Stahlfolie", "Stahl_folie.txt", 5, "Stahl", 1)
+# peakFit("Eisenfolie", "Eisen_folie_NEU.txt"	, 4, "Eisen", 6, 0.21,	22000,	32000, 0, False)
+# peakFit("Stahlfolie", "Stahl_folie.txt"		, 5, "Stahl", 1, 1,		20000,		45000, 20, True)
+
+def foldChannels(fileName, shift, motorVoltage):
+	# read data
+	
+	channels, counts = readRawData("Messwerte/" + fileName)
+	lineCount = len(channels)
+	middle = math.ceil(lineCount / 2)
+	
+	# fold half of the channels over
+	
+	channelsRev = channels.copy()
+	countsRev = counts.copy()
+	channelsRev.reverse()
+	countsRev.reverse()
+	
+	# cut out second half of values and those at the beginning / end which have no folded counterpart
+	
+	channels = channels[max(0, shift) : middle - max(0, -shift)]
+	counts   = counts  [max(0, shift) : middle - max(0, -shift)]
+	
+	channelsRev = channelsRev[max(0, -shift) : middle - max(0, shift)]
+	countsRev   = countsRev  [max(0, -shift) : middle - max(0, shift)]
+	
+	for i in range(0, len(channelsRev)):
+		channelsRev[i] = i + max(0, shift)
+	
+	# add counts and folded counts together
+	
+	countsFolded = [(count + countRev) for (count, countRev) in zip(counts, countsRev)]
+	
+	# calculate velocity
+	
+	velocities = []
+	
+	minCh = min(channels)
+	maxCh = max(channels)
+	for i in range(minCh, maxCh+1):
+		vel = math.cos((i / maxCh) * math.pi)
+		vel = vel * 0.16257 * (1 if motorVoltage == 0 else motorVoltage) + 0.0017
+		velocities.append(vel)
+	
+	plot.plot(velocities, counts, linestyle="dashed", label="Original", color="blue")
+	plot.plot(velocities, countsRev, linestyle="dashed", label="Reversed", color="red")
+	plot.plot(velocities, [cF / 2 for cF in countsFolded], label="Folded", color="purple")
+	
+	plot.legend(loc="lower left")
+	plot.xlabel("Geschwindigkeit in ($\mathrm{\\frac{mm}{s}})$")
+	plot.ylabel(f"Anzahl Ereignisse")
+	plot.grid(color="lightgray", linestyle="dashed")
+	
+	plot.show()
+	
+	return (velocities, countsFolded)
+
+(vel, cnts) = foldChannels("Eisen_folie_NEU.txt", 4, 6)
+# saveListAsCSV([vel, cnts], "MesswerteGefaltet/Eisen.fld")
+
+(vel, cnts) = foldChannels("Stahl_folie.txt", 5, 22)
+# saveListAsCSV([vel, cnts], "MesswerteGefaltet/Stahl.fld")
+
+(vel, cnts) = foldChannels("gelbes_Salz.txt", 3, 20)
+# saveListAsCSV([vel, cnts], "MesswerteGefaltet/BlutlaugenSalzGelb.fld")
+
+(vel, cnts) = foldChannels("rotes_Salz.txt", 3, 20)
+# saveListAsCSV([vel, cnts], "MesswerteGefaltet/BlutlaugenSalzRot.fld")
+
+(vel, cnts) = foldChannels("Fe2O3.txt", 3, 20)
+# saveListAsCSV([vel, cnts], "MesswerteGefaltet/Fe2O3.fld")
