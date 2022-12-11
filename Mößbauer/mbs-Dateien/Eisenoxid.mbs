@@ -29,3 +29,13 @@ PLOT
 runs 1
 ###############################################################
 ###############################################################
+###############################################################
+
+FITDATA
+           T[K]	              B	          Error	            Vzz	          Error	            eta	          Error	          theta	          Error	            phi	          Error	             CS	          Error	          omega	          Error	             I0	          Error	             A0	          Error	
+           1.00	          51.81	      press 'e'	          27.39	      press 'e'	         0.1766	      press 'e'	          90.00	      press 'e'	         180.00	      press 'e'	        0.15833	      press 'e'	        0.17148	      press 'e'	      980553.96	      press 'e'	      411698.99	      press 'e'	
+###################
+FITSTATISTICS
+Total chi2: 10056.349501
+           T[K]	       chi2_red	 K-S-confidence	       MEM-diff	     MEM-lambda	 MEM-iterations
+           1.00	          20.15	          0.000	          0.000	          0.000	              0

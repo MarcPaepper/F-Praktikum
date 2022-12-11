@@ -1,14 +1,14 @@
 ######################
 FITPARAMETER
-B 49 1
-Vzz -13 2
-eta -0.07 0.10
-theta -1 5
-phi -4 5
-CS -0.203 0.020
-omega 0.350 0.010
-I0 981821 5000
-A0 449541 1000
+B 33 1
+Vzz 50 2
+eta 0 0.1
+theta 0 5
+phi 0 5
+CS -0.4 0.02
+omega 0.35 0.01
+I0 180000 5000
+A0 30000 1000
 ###############################################################
 THEORY
 BL I0
@@ -33,9 +33,9 @@ runs 1
 
 FITDATA
            T[K]	              B	          Error	            Vzz	          Error	            eta	          Error	          theta	          Error	            phi	          Error	             CS	          Error	          omega	          Error	             I0	          Error	             A0	          Error	
-           1.00	          49.05	      press 'e'	         -12.80	      press 'e'	        -0.0700	      press 'e'	          -0.70	      press 'e'	          -3.50	      press 'e'	       -0.20280	      press 'e'	        0.35000	      press 'e'	      980447.88	      press 'e'	       43600.00	      press 'e'	
+           1.00	          51.81	      press 'e'	          27.39	      press 'e'	         0.1766	      press 'e'	          90.00	      press 'e'	         180.00	      press 'e'	        0.15833	      press 'e'	        0.17148	      press 'e'	      980553.96	      press 'e'	      411698.99	      press 'e'	
 ###################
 FITSTATISTICS
-Total chi2: 486363.111486
+Total chi2: 10056.349501
            T[K]	       chi2_red	 K-S-confidence	       MEM-diff	     MEM-lambda	 MEM-iterations
-           1.00	         974.68	          0.000	          0.000	          0.000	              0
+           1.00	          20.15	          0.000	          0.000	          0.000	              0

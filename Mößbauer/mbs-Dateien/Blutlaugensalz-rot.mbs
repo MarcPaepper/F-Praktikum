@@ -28,3 +28,13 @@ RUN
 PLOT
 runs 1
 ###############################################################
+###############################################################
+
+FITDATA
+           T[K]	              B	          Error	            Vzz	          Error	            eta	          Error	          theta	          Error	            phi	          Error	             CS	          Error	          omega	          Error	             I0	          Error	             A0	          Error	
+           1.00	           0.41	           0.09	          14.87	           1.02	         0.7107	         0.2654	          89.99	          15.56	         180.00	          19.81	       -0.24358	        0.00157	        0.11789	        0.00482	       37339.37	          12.06	        3102.73	          43.05	
+###################
+FITSTATISTICS
+Total chi2: 525.613036
+           T[K]	       chi2_red	 K-S-confidence	       MEM-diff	     MEM-lambda	 MEM-iterations
+           1.00	           1.05	          0.578	          0.000	          0.000	              0

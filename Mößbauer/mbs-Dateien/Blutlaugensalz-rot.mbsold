@@ -1,7 +1,7 @@
 ######################
 FITPARAMETER
 B 0 1
-Vzz 20 2
+Vzz 50 2
 eta 0 0.1
 theta 0 5
 phi 0 5
@@ -23,19 +23,18 @@ MaxIter 5000
 Errors Hesse
 ###############################################################
 RUN
-"D:\Workspace\F-Praktikum\Mößbauer\MesswerteGefaltet\BlutlaugenSalzGelb.fld" 1
+"D:\Workspace\F-Praktikum\Mößbauer\MesswerteGefaltet\BlutlaugenSalzRot.fld" 1
 ###############################################################
 PLOT
 runs 1
 ###############################################################
 ###############################################################
-###############################################################
 
 FITDATA
            T[K]	              B	          Error	            Vzz	          Error	            eta	          Error	          theta	          Error	            phi	          Error	             CS	          Error	          omega	          Error	             I0	          Error	             A0	          Error	
-           1.00	           0.21	      press 'e'	           2.43	      press 'e'	        -0.9838	      press 'e'	          44.64	      press 'e'	          -0.00	      press 'e'	       -0.18289	      press 'e'	        0.13138	      press 'e'	      402155.37	      press 'e'	       36124.02	      press 'e'	
+           1.00	           0.41	           0.09	          14.87	           1.02	         0.7107	         0.2654	          89.99	          15.64	         180.00	          19.89	       -0.24358	        0.00157	        0.11789	        0.00482	       37339.37	          12.06	        3102.73	          43.05	
 ###################
 FITSTATISTICS
-Total chi2: 554.801871
+Total chi2: 525.613036
            T[K]	       chi2_red	 K-S-confidence	       MEM-diff	     MEM-lambda	 MEM-iterations
-           1.00	           1.11	          0.910	          0.000	          0.000	              0
+           1.00	           1.05	          0.578	          0.000	          0.000	              0
