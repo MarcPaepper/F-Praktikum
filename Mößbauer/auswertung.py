@@ -216,16 +216,16 @@ def foldChannels(fileName, shift, motorVoltage):
 	return (velocities, countsFolded)
 
 (vel, cnts) = foldChannels("Eisen_folie_NEU.txt", 4, 6)
-# saveListAsCSV([vel, cnts], "MesswerteGefaltet/Eisen.fld")
+saveListAsCSV([vel, cnts], "MesswerteGefaltet/Eisen.fld")
 
 (vel, cnts) = foldChannels("Stahl_folie.txt", 5, 22)
-# saveListAsCSV([vel, cnts], "MesswerteGefaltet/Stahl.fld")
+saveListAsCSV([vel, cnts], "MesswerteGefaltet/Stahl.fld")
 
 (vel, cnts) = foldChannels("gelbes_Salz.txt", 3, 20)
-# saveListAsCSV([vel, cnts], "MesswerteGefaltet/BlutlaugenSalzGelb.fld")
+saveListAsCSV([vel, cnts], "MesswerteGefaltet/BlutlaugenSalzGelb.fld")
 
-(vel, cnts) = foldChannels("rotes_Salz.txt", 3, 20)
-# saveListAsCSV([vel, cnts], "MesswerteGefaltet/BlutlaugenSalzRot.fld")
+(vel, cnts) = foldChannels("rotes_Salz.txt", 3, 10)
+saveListAsCSV([vel, cnts], "MesswerteGefaltet/BlutlaugenSalzRot.fld")
 
-(vel, cnts) = foldChannels("Fe2O3.txt", 3, 20)
-# saveListAsCSV([vel, cnts], "MesswerteGefaltet/Fe2O3.fld")
+(vel, cnts) = foldChannels("Fe2O3.txt", 3, 83)
+saveListAsCSV([vel, cnts], "MesswerteGefaltet/Fe2O3.fld")
