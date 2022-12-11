@@ -1,0 +1,41 @@
+######################
+FITPARAMETER
+B 49 1
+Vzz -13 2
+eta -0.07 0.10
+theta -1 5
+phi -4 5
+CS -0.203 0.020
+omega 0.350 0.010
+I0 981821 5000
+A0 449541 1000
+###############################################################
+THEORY
+BL I0
+SHp B Vzz eta theta phi CS omega A0
+###############################################################
+FUNCTIONS
+###############################################################
+COMMANDS
+A A0
+I0 I0
+MaxIter 5000
+Errors Hesse
+###############################################################
+RUN
+"D:\Workspace\F-Praktikum\Mößbauer\MesswerteGefaltet\Fe2O3.fld" 1
+###############################################################
+PLOT
+runs 1
+###############################################################
+###############################################################
+###############################################################
+
+FITDATA
+           T[K]	              B	          Error	            Vzz	          Error	            eta	          Error	          theta	          Error	            phi	          Error	             CS	          Error	          omega	          Error	             I0	          Error	             A0	          Error	
+           1.00	          49.05	      press 'e'	         -12.80	      press 'e'	        -0.0700	      press 'e'	          -0.70	      press 'e'	          -3.50	      press 'e'	       -0.20280	      press 'e'	        0.35000	      press 'e'	      980447.88	      press 'e'	       43600.00	      press 'e'	
+###################
+FITSTATISTICS
+Total chi2: 486363.111486
+           T[K]	       chi2_red	 K-S-confidence	       MEM-diff	     MEM-lambda	 MEM-iterations
+           1.00	         974.68	          0.000	          0.000	          0.000	              0

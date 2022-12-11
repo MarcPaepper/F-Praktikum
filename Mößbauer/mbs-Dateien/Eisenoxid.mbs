@@ -23,7 +23,7 @@ MaxIter 5000
 Errors Hesse
 ###############################################################
 RUN
-"C:\Users\Kryolabor\Desktop\>Ordnername<\>Dateiname<" 1
+"D:\Workspace\F-Praktikum\Mößbauer\MesswerteGefaltet\Fe2O3.fld" 1
 ###############################################################
 PLOT
 runs 1

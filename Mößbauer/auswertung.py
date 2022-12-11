@@ -6,7 +6,7 @@ import math
 from sklearn.metrics import r2_score
 from inputOutput import *
 
-savePlots = False
+savePlots = True
 showPlots = True
 
 def lorentzian(x, x_0, amplitude, fwhm):
@@ -127,7 +127,7 @@ def peakFit(caption, fileName, shift, saveName, numberPeaks, startDiff, ymin, ym
 	# print out latex list
 	
 	captionL = "Fitparameter der Peaks für %s" % caption
-	headers = ["$\\#$ des Peaks", "$x_0$", "amp", "fwhm"]
+	headers = ["$\\#$ des Peaks", "$v_0 \\t{\, in \, \\frac{mm}{s}}$", "amp", "$\\t{FWHM \, in \, \\frac{mm}{s}}$"]
 	
 	ii = list(range(1, numberPeaks + 1))
 		
@@ -166,7 +166,7 @@ def peakFit(caption, fileName, shift, saveName, numberPeaks, startDiff, ymin, ym
 	if(showPlots):
 		plot.show()
 
-peakFit("Eisenfolie", "Eisen_folie_NEU.txt"	, 4, "Eisen", 6, 0.21,	22000,	32000, 0, False)
+# peakFit("Eisenfolie", "Eisen_folie_NEU.txt"	, 4, "Eisen", 6, 0.21,	22000,	32000, 0, False)
 peakFit("Stahlfolie", "Stahl_folie.txt"		, 5, "Stahl", 1, 1,		20000,		45000, 20, True)
 
 

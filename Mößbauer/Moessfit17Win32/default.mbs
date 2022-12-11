@@ -34,7 +34,7 @@ Errors Hesse
 #Nucleus Egamma g12 g32 Q mass
 ###############################################################
 RUN
-"C:/Users/Kryolabor/Desktop/Moessfit17Win32/default.fld" 1
+"D:/Workspace/F-Praktikum/Mößbauer/Moessfit17Win32/default.fld" 1
 ###############################################################
 PLOT
 runs 1
