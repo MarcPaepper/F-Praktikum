@@ -6,7 +6,7 @@ import math
 from sklearn.metrics import r2_score
 from inputOutput import *
 
-savePlots = True
+savePlots = False
 showPlots = True
 
 def lorentzian(x, x_0, amplitude, fwhm):
@@ -98,7 +98,7 @@ def peakFit(caption, fileName, shift, saveName, numberPeaks, startDiff, ymin, ym
 						x_0s[0], x_0s[1], x_0s[2], x_0s[3], x_0s[4], x_0s[5],
 						amp, amp, amp, amp, amp, amp,
 						fwhm, fwhm, fwhm, fwhm, fwhm, fwhm)]
-	fitCounts = []
+	
 	# for v in velocities:
 	# 	fitCounts.append(lorentzianMulti(v, offset,
 	# 									x_0s[0], x_0s[1], x_0s[2], x_0s[3], x_0s[4], x_0s[5],
@@ -107,10 +107,16 @@ def peakFit(caption, fileName, shift, saveName, numberPeaks, startDiff, ymin, ym
 	
 	if (numberPeaks == 1):
 		par, pcov = curve_fit(lorentzianX1, velocities, counts, p0=initParams)
+		fitCounts = [lorentzianX1(v, par[0], par[1], par[2], par[3]) for v in velocities]
 	elif (numberPeaks == 6):
 		par, pcov = curve_fit(lorentzianX6, velocities, counts, p0=initParams)
+		fitCounts = [lorentzianX6(v, par[0], par[1], par[2], par[3], par[4], par[5], par[6], par[7], par[8],
+								  par[9], par[10], par[11], par[12], par[13], par[14], par[15], par[16], par[17], par[18])
+					 for v in velocities]
 	parStDev = np.sqrt(np.diag(pcov))
+	rSq = r2_score(counts, fitCounts)
 	
+	print(f"R²: {rSq}")
 	print(f"offset:\t{round(par[0], 2)}\t±\t{round(parStDev[0], 2)}")
 	for i in range(numberPeaks):
 		print(f"i={i+1}")
@@ -132,6 +138,7 @@ def peakFit(caption, fileName, shift, saveName, numberPeaks, startDiff, ymin, ym
 	showListAsLatexTable(captionL, caption, headers, [ii, x_0s, amps, fwhms])
 	
 	velocitiesFit = np.linspace(-20, 20, 10000)
+	fitCounts = []
 	for v in velocitiesFit:
 		if (numberPeaks == 6):
 			fitCounts.append(lorentzianX6(v, *par))
@@ -151,7 +158,7 @@ def peakFit(caption, fileName, shift, saveName, numberPeaks, startDiff, ymin, ym
 	plot.axis([minX, maxX, minY, maxY])
 	
 	plot.legend(loc="lower left")
-	plot.xlabel("Geschwindigkeit in ($\mathrm{\\frac{mm}{s}})$")
+	plot.xlabel("Geschwindigkeit in $\mathrm{\\frac{mm}{s}}$")
 	plot.ylabel(f"Anzahl Ereignisse")
 	plot.grid(color="lightgray", linestyle="dashed")
 	if (savePlots):
@@ -159,8 +166,9 @@ def peakFit(caption, fileName, shift, saveName, numberPeaks, startDiff, ymin, ym
 	if(showPlots):
 		plot.show()
 
-# peakFit("Eisenfolie", "Eisen_folie_NEU.txt"	, 4, "Eisen", 6, 0.21,	22000,	32000, 0, False)
-# peakFit("Stahlfolie", "Stahl_folie.txt"		, 5, "Stahl", 1, 1,		20000,		45000, 20, True)
+peakFit("Eisenfolie", "Eisen_folie_NEU.txt"	, 4, "Eisen", 6, 0.21,	22000,	32000, 0, False)
+peakFit("Stahlfolie", "Stahl_folie.txt"		, 5, "Stahl", 1, 1,		20000,		45000, 20, True)
+
 
 def foldChannels(fileName, shift, motorVoltage):
 	# read data
@@ -215,17 +223,17 @@ def foldChannels(fileName, shift, motorVoltage):
 	
 	return (velocities, countsFolded)
 
-(vel, cnts) = foldChannels("Eisen_folie_NEU.txt", 4, 6)
-saveListAsCSV([vel, cnts], "MesswerteGefaltet/Eisen.fld")
+# (vel, cnts) = foldChannels("Eisen_folie_NEU.txt", 4, 6)
+# # saveListAsCSV([vel, cnts], "MesswerteGefaltet/Eisen.fld")
 
-(vel, cnts) = foldChannels("Stahl_folie.txt", 5, 22)
-saveListAsCSV([vel, cnts], "MesswerteGefaltet/Stahl.fld")
+# (vel, cnts) = foldChannels("Stahl_folie.txt", 5, 22)
+# # saveListAsCSV([vel, cnts], "MesswerteGefaltet/Stahl.fld")
 
-(vel, cnts) = foldChannels("gelbes_Salz.txt", 3, 20)
-saveListAsCSV([vel, cnts], "MesswerteGefaltet/BlutlaugenSalzGelb.fld")
+# (vel, cnts) = foldChannels("gelbes_Salz.txt", 3, 20)
+# # saveListAsCSV([vel, cnts], "MesswerteGefaltet/BlutlaugenSalzGelb.fld")
 
-(vel, cnts) = foldChannels("rotes_Salz.txt", 3, 10)
-saveListAsCSV([vel, cnts], "MesswerteGefaltet/BlutlaugenSalzRot.fld")
+# (vel, cnts) = foldChannels("rotes_Salz.txt", 3, 10)
+# # saveListAsCSV([vel, cnts], "MesswerteGefaltet/BlutlaugenSalzRot.fld")
 
-(vel, cnts) = foldChannels("Fe2O3.txt", 3, 83)
-saveListAsCSV([vel, cnts], "MesswerteGefaltet/Fe2O3.fld")
+# (vel, cnts) = foldChannels("Fe2O3.txt", 3, 83)
+# # saveListAsCSV([vel, cnts], "MesswerteGefaltet/Fe2O3.fld")
