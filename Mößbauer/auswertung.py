@@ -127,7 +127,7 @@ def peakFit(caption, fileName, shift, saveName, numberPeaks, startDiff, ymin, ym
 	# print out latex list
 	
 	captionL = "Fitparameter der Peaks für %s" % caption
-	headers = ["$\\#$ des Peaks", "$v_0 \\t{\, in \, \\frac{mm}{s}}$", "amp", "$\\t{FWHM \, in \, \\frac{mm}{s}}$"]
+	headers = ["$\\#$ des Peaks", "$v_0 \\t{\, in \, \\frac{mm}{s}}$", "amp", "$\\Gamma \\t{\, in \, \\frac{mm}{s}}$"]
 	
 	ii = list(range(1, numberPeaks + 1))
 		
