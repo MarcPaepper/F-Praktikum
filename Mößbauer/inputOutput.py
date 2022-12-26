@@ -2,7 +2,6 @@ import os
 import csv
 import re
 import math
-from tkinter import messagebox
 from tkinter import Tk
 
 def readRawData(fileName) -> list[list]:
@@ -152,6 +151,19 @@ def showListAsLatexTable(caption: str, label, headers: list[str], valueLists: li
 	
 	print("--- LaTeX Table for (%s) ---\n" % caption)
 	print(text)
+
+filePath = "D:\Workspace\F-Praktikum\Röntgen\hkl.csv"
+headers = ["""$m$""", """$n$""", """$r_\\t{Mess}$""", """$\Delta r_\\t{Mess}$""", """$r_\\t{Vesta}$"""]
+reader = csv.reader(open(filePath, 'r'), delimiter='\t', skipinitialspace = True)
+mList = nList = rList = rErrList = rExpList = []
+for row in reader:
+	m, n, r, rErr, rExp = row
+	mList.append(m)
+	nList.append(n)
+	rList.append(r)
+	rErrList.append(rErr)
+	rExpList.append(rExp)
+showListAsLatexTable("Verhältnisse $r$ aller Kombinationen der gemessenen Peaks", "r", headers, [mList, nList, rList, rErrList, rExpList])
 
 def saveListAsCSV(columns: list[list[any]], fileName: str, headers: list[str] = None):
 	file = open(fileName, "w", newline="")
